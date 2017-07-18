@@ -1,0 +1,13 @@
+{
+  "name": "dll",
+  "content": {
+    "./css/common.css": {
+      "id": 0,
+      "meta": {}
+    },
+    "./node_modules/.3.3.7@bootstrap/dist/css/bootstrap.min.css": {
+      "id": 1,
+      "meta": {}
+    }
+  }
+}

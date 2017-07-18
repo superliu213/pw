@@ -1,0 +1,67 @@
+{
+	"sysMenuList": [{
+		"menuName": "权限管理",
+		"url": "#",
+		"logoTag": "fa-diamond",
+		"sysMenuList": [{
+			"menuName": "用户管理",
+			"url": "./modules/authority/user/user.html"
+		},
+		{
+			"menuName": "角色管理",
+			"url": "./modules/authority/role/role.html"
+		},
+		{
+			"menuName": "机构管理",
+			"url": "./modules/authority/group/group.html"
+		},
+		{
+			"menuName": "权限管理",
+			"url": "./modules/authority/function/function.html"
+		}]
+	},
+	{
+		"menuName": "报表管理",
+		"url": "#",
+		"logoTag": "fa-bar-chart",
+		"sysMenuList": [{
+			"menuName": "demo",
+			"url": "./modules/report/demo/report.html"
+		}]
+	},
+	{
+		"menuName": "系统管理",
+		"url": "#",
+		"logoTag": "fa-money",
+		"sysMenuList": [{
+			"menuName": "性能监控",
+			"url": "/monitoring"
+		},
+		{
+			"menuName": "数据库监控",
+			"url": "/proxooladmin"
+		}]
+	},
+	{
+		"menuName": "日志管理",
+		"url": "#",
+		"logoTag": "fa-map-o",
+		"sysMenuList": [{
+			"menuName": "日志查询",
+			"url": "./modules/log/log/log.html"
+		}]
+	},
+	{
+		"menuName": "代码样例",
+		"url": "#",
+		"logoTag": "fa-adjust",
+		"sysMenuList": [{
+			"menuName": "Form表单",
+			"url": "./modules/codedemo/form/form.html"
+		},
+		{
+			"menuName": "DataTables",
+			"url": "./modules/codedemo/dataTables/dataTables.html"
+		}]
+	}]
+}

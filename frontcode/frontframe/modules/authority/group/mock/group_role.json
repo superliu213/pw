@@ -1,0 +1,35 @@
+{
+	"checkbox": {
+		"keep_selected_style": false
+	},
+	"core": {
+		"data": [{
+			"data": 1,
+			"id": "1",
+			"state": {
+				"opened": true,
+				"selected": true
+			},
+			"text": "超级管理员"
+		},
+		{
+			"data": 2,
+			"id": "2",
+			"state": {
+				"opened": true,
+				"selected": false
+			},
+			"text": "一号线"
+		},
+		{
+			"data": 3,
+			"id": "3",
+			"state": {
+				"opened": true,
+				"selected": false
+			},
+			"text": "车站"
+		}]
+	},
+	"plugins": ["checkbox"]
+}

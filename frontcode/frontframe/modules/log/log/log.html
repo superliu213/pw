@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>日志查询</title>
+
+  <link href="../../../favicon.ico" rel="shortcut icon">
+
+  <link href="../../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+  <link href="../../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+  <link href="../../../css/animate.css" rel="stylesheet">
+  <link href="../../../css/style.css?v=4.1.0" rel="stylesheet">
+
+  <!-- Bootstrap Tables plugin css -->
+  <link href="../../../css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+
+  <!-- bootstrap-dialog plugin css -->
+  <link href="../../../css/bootstrap-dialog.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+  <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+          <div class="ibox-title">
+            <h5>日志查询</h5>
+          </div>
+          <div class="ibox-content">
+            <form id="logForm" class="form-horizontal">
+              <div class="form-group">
+                <button id="query_table" class="btn btn-primary" type="button">查询</button>
+                <button id="reset_form" class="btn btn-primary" type="button">重置</button>
+                <button id="reset_data" class="btn btn-primary" type="button">数据初始化</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="ibox float-e-margins">
+          <div class="ibox-title">
+            <h5>数据</h5>
+          </div>
+          <div id="main" class="ibox-content">
+            <table id="pw_table" data-toggle="table" data-ajax="dataLoad" data-height="500" data-pagination="true" data-side-pagination="server" data-query-params="queryParams" data-page-list="[10, 20, 50]">
+              <thead>
+                <tr>
+                  <th data-field="id">序号</th>
+                  <th data-field="occurTime" data-formatter="timeFormatter">发生时间</th>
+                  <th data-field="operatorId">操作员</th>
+                  <th data-field="logType">日志类型</th>
+                  <th data-field="logLevel">日志等级</th>
+                  <th data-field="logDesc">日志描述</th>
+                  <th data-field="ipAddress">操作员IP</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 全局js -->
+  <script src="../../../js/jquery.min.js?v=2.1.4"></script>
+  <script src="../../../js/bootstrap.min.js?v=3.3.6"></script>
+
+  <!-- Bootstrap table plugin javascript -->
+  <script src="../../../js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+  <script src="../../../js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+  <script src="../../../js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+  <!-- layerDate plugin javascript -->
+  <script src="../../../js/plugins/layer/laydate/laydate.js"></script>
+
+  <!-- jQuery Validation plugin javascript-->
+  <script src="../../../js/plugins/validate/jquery.validate.min.js"></script>
+  <script src="../../../js/plugins/validate/additional-methods.js"></script>
+  <script src="../../../js/plugins/validate/messages_zh.min.js"></script>
+
+  <!-- bootstrap-dialog plugin javascript-->
+  <script src="../../../js/bootstrap-dialog.js"></script>
+
+  <!-- jquery.mockjax plugin javascript -->
+  <script src="../../../js/jquery.mockjax.js"></script>
+
+  <!-- 自定义js -->
+  <script src="../../../js/URL.js?v=1.0.0"></script>
+  <script src="../../../js/content.js?v=1.0.0"></script>
+  <script src="mock/mockData.js"></script>
+  <script src="../../../js/jquery.values.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script src="page.js"></script>
+
+</body>
+
+</html>

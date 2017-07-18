@@ -1,0 +1,16 @@
+{
+    "totalItem":21,
+
+    "draw":3,
+    "recordsTotal":21,
+    "recordsFiltered":21,
+    "data":[
+        {
+            "a1": 21,
+            "b1": "测试21",
+            "c1": "&yen;0",
+            "d1": "c10",
+            "e1": "c20"
+        }
+    ]
+}

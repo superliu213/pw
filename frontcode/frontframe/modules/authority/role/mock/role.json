@@ -1,0 +1,17 @@
+{
+    "totalItem":2,
+    "data":[
+        {
+            "id": 1,
+            "roleId": "0",
+            "roleDesc": "超级管理员",
+            "remark":"1"
+       },
+        {
+            "id": 2,
+            "roleId": "1",
+            "roleDesc": "一号线",
+            "remark":"1"
+       }
+    ]
+}

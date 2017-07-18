@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>票务系统-登录</title>
+
+  <link href="favicon.ico" rel="shortcut icon">
+
+  <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+  <link href="css/font-awesome.css?v=4.4.0" rel="stylesheet">
+  <link href="css/animate.css" rel="stylesheet">
+  <link href="css/style.css?v=4.1.0" rel="stylesheet">
+
+  <!-- bootstrap-dialog plugin css -->
+  <link href="css/bootstrap-dialog.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+  <div class="middle-box text-center loginscreen  animated fadeInDown">
+    <div>
+      <h2><strong>票务系统</strong></h2>
+      <form id="loginForm" autocomplete="off" class="m-t">
+        <div class="form-group">
+          <input type="text" class="form-control" name="userId" placeholder="用户名" required="">
+        </div>
+        <div class="form-group">
+          <input type="password" class="form-control" name="password" placeholder="密码" required="">
+        </div>
+        <input type="button" id="loginBtn" class="btn btn-primary block full-width m-b" value="登录">
+      </form>
+
+      <div id="results"></div>
+    </div>
+  </div>
+
+  <!-- 全局js -->
+  <script src="js/jquery.min.js?v=2.1.4"></script>
+  <script src="js/bootstrap.min.js?v=3.3.6"></script>
+
+  <!-- jquery.mockjax plugin javascript -->
+  <script src="js/jquery.mockjax.js"></script>
+
+  <!-- bootstrap-dialog plugin javascript-->
+  <script src="js/bootstrap-dialog.js"></script>
+
+  <!-- 自定义js -->
+  <script src="js/jquery.values.js"></script>
+  <script src="js/URL.js"></script>
+  <script src="mock/mockData.js"></script>
+
+</body>
+<script>
+if(window.top !== window.self){ window.top.location = window.location;}
+
+$(document).ready(function(){
+  $("#loginBtn").click(function() {
+    $.ajax({
+      url:interUrl.basic + interUrl.common.login,
+      type: "POST",
+      data: $("#loginForm").values(),
+      success: function(res) {
+        console.log("success: ", res);
+        var o;
+        if (typeof res === "string") {
+          o = JSON.parse(res);
+        } else {
+          o = res;
+        }
+        if (o["code"] === 10000) {
+          sessionStorage.setItem('authId',o.data[0]);//权限token
+          sessionStorage.setItem('userId' , $("#loginForm").values().userId);//用户ID
+          location.href = "index.html";
+        } else if (o['code'] === 20000) {
+          BootstrapDialog.show({
+            title : '错误信息',
+            message : "登录"+o['message']
+          });
+        }
+      },
+      error:function(e){
+        BootstrapDialog.show({
+          title : '错误信息',
+          message : 'ajax请求error'
+        });
+      }
+    });
+  });
+});
+
+</script>
+
+</html>

@@ -1,0 +1,33 @@
+{
+    "totalItem":2,
+    "data":[
+        {
+            "id": 1,
+            "userId": "admin",
+            "userPassWord": "admin",
+            "userName": "超级管理员",
+            "userTelephone": "123456789",
+            "userEmail": "liuliu@163.com",
+            "userBirthday": "2017-01-02",
+            "userIdCard": "111111",
+            "ifValid": "1",
+            "userValidityPeriod": "2017-01-02",
+            "pwValidityPeriod": "2017-01-02",
+            "remark": "1"
+        },
+        {
+            "id": 2,
+            "userId": "1",
+            "userPassWord": "1",
+            "userName": "1",
+            "userTelephone": "123456789",
+            "userEmail": "liuliu@163.com",
+            "userBirthday": "2017-01-02",
+            "userIdCard": "111111",
+            "ifValid": "1",
+            "userValidityPeriod": "2017-01-02",
+            "pwValidityPeriod": "2017-01-02",
+            "remark": "1"
+        }
+    ]
+}

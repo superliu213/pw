@@ -1,0 +1,33 @@
+{
+    "totalItem":2,
+
+    "data":[
+        {
+            "id": 1,
+            "groupId": "1",
+            "groupName": "1号线",
+            "groupLever": "1",
+            "groupParentId":"",
+            "orderNo": "1",
+            "remark":""
+        },
+        {
+            "id": 1,
+            "groupId": "2",
+            "groupName": "车站1",
+            "groupLever": "2",
+            "groupParentId":"1",
+            "orderNo": "1",
+            "remark":""
+        },
+        {
+            "id": 1,
+            "groupId": "3",
+            "groupName": "车站2",
+            "groupLever": "2",
+            "groupParentId":"1",
+            "orderNo": "2",
+            "remark":""
+        }
+    ]
+}

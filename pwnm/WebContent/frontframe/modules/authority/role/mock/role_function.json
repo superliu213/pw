@@ -1,0 +1,125 @@
+{
+  "checkbox": {
+    "keep_selected_style": false
+  },
+  "core": {
+    "data": [{
+        "children": [{
+            "children": [{
+                "data": 141,
+                "icon": "none",
+                "text": "用户管理"
+              },
+              {
+                "data": 142,
+                "icon": "none",
+                "text": "角色管理"
+              },
+              {
+                "data": 143,
+                "icon": "none",
+                "text": "机构管理"
+              },
+              {
+                "data": 144,
+                "icon": "none",
+                "text": "权限管理"
+              }
+            ],
+            "data": 14,
+            "state": {
+              "opened": true,
+              "selected": true
+            },
+            "text": "权限管理"
+          }
+        ],
+        "data": 1,
+        "state": {
+          "opened": true,
+          "selected": true
+        },
+        "text": "票务Demo"
+      },
+      {
+        "children": [{
+          "data": 20,
+          "state": {
+            "opened": true,
+            "selected": true
+          },
+          "text": "demo"
+        }],
+        "data": 1,
+        "state": {
+          "opened": true,
+          "selected": true
+        },
+        "text": "报表管理"
+      },
+      {
+        "children": [{
+          "data": 21,
+          "state": {
+            "opened": true,
+            "selected": true
+          },
+          "text": "性能监控"
+        },{
+          "data": 22,
+          "state": {
+            "opened": true,
+            "selected": true
+          },
+          "text": "数据库监控"
+        }],
+        "data": 2,
+        "state": {
+          "opened": true,
+          "selected": true
+        },
+        "text": "系统管理"
+      },
+      {
+        "children": [{
+          "data": 20,
+          "state": {
+            "opened": true,
+            "selected": true
+          },
+          "text": "日志查询"
+        }],
+        "data": 1,
+        "state": {
+          "opened": true,
+          "selected": true
+        },
+        "text": "日志管理"
+      },
+      {
+        "children": [{
+          "data": 21,
+          "state": {
+            "opened": true,
+            "selected": true
+          },
+          "text": "Form表单"
+        },{
+          "data": 22,
+          "state": {
+            "opened": true,
+            "selected": true
+          },
+          "text": "DataTables"
+        }],
+        "data": 2,
+        "state": {
+          "opened": true,
+          "selected": true
+        },
+        "text": "代码样例"
+      }
+    ]
+  },
+  "plugins": ["checkbox"]
+}

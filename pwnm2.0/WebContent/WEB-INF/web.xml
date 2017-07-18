@@ -1,0 +1,118 @@
+<web-app version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+	<display-name>pw</display-name>
+	
+	<!-- springmvc -->
+	<servlet>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+		    <param-name>contextConfigLocation</param-name>
+            <param-value>
+                classpath:springmvc-servlet.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	
+	<!-- spring配置 -->	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath:spring-config.xml
+		</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>com.springapp.common.listener.AppInitListener</listener-class>
+	</listener>
+	
+	<!-- proxool -->
+	<context-param>
+		<param-name>proxoolConfigLocation</param-name>
+		<param-value>WEB-INF/classes/spring/proxool.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>com.springapp.common.ProxoolConfiguratorListener</listener-class>
+	</listener>
+	
+	<servlet>
+		<servlet-name>proxooladmin</servlet-name>
+		<servlet-class>org.logicalcobwebs.proxool.admin.servlet.AdminServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>proxooladmin</servlet-name>
+		<url-pattern>/proxooladmin</url-pattern>
+	</servlet-mapping>
+	
+	<filter>
+		<filter-name>hibernateFilter</filter-name>
+		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
+		<init-param>
+			<param-name>singleSession</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>hibernateFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 性能监控 -->
+	<filter>
+		<filter-name>monitoring</filter-name>
+		<filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
+		<init-param>
+			<param-name>log</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>monitoring</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<listener>
+		<listener-class>net.bull.javamelody.SessionListener</listener-class>
+	</listener>
+	
+	<!-- smartbi报表session监控 -->
+ 	<servlet>
+		<servlet-name>smartbiSessionMonitorServlet</servlet-name>
+		<servlet-class>com.springapp.common.SmartbiSessionMonitorServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>smartbiSessionMonitorServlet</servlet-name>
+		<url-pattern>/smartbiSessionMonitorServlet</url-pattern>
+	</servlet-mapping>
+	
+	<!-- h2 -->
+	<listener>
+    	<listener-class>org.h2.server.web.DbStarter</listener-class>
+	</listener>
+	<context-param>
+	    <param-name>db.url</param-name>
+	    <param-value>jdbc:h2:~/test</param-value>
+	</context-param>
+	<context-param>
+	    <param-name>db.user</param-name>
+	    <param-value>sa</param-value>
+	</context-param>
+	<context-param>
+	    <param-name>db.password</param-name>
+	    <param-value>sa</param-value>
+	</context-param>
+	<context-param>
+	    <param-name>db.tcpServer</param-name>
+	    <param-value>-tcpAllowOthers</param-value>
+	</context-param>
+</web-app>

@@ -1,0 +1,33 @@
+{
+  "totalItem":2,
+
+  "draw":1,
+  "recordsTotal":2,
+  "recordsFiltered":2,
+  "data":[
+    {
+      "id": 1,
+      "functionId": 1,
+      "functionName": "权限管理",
+      "functionType": "1",
+      "functionParentId":"-1",
+      "functionUrl": "#",
+      "orderNo": "1",
+      "functionLogo":"fa-diamond",
+      "buttonPosition":"",
+      "remark":"1"
+    },
+    {
+      "id": 2,
+      "functionId": 2,
+      "functionName": "报表管理",
+      "functionType": "1",
+      "functionParentId":"-1",
+      "functionUrl": "#",
+      "orderNo": "1",
+      "functionLogo":"fa-bar-chart",
+      "buttonPosition":"",
+      "remark":"1"
+    }
+  ]
+}

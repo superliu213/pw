@@ -1,0 +1,19 @@
+<div class="middle-box text-center loginscreen  animated fadeInDown">
+    <div>
+        <div>
+            <h1 class="logo-name">H+</h1>
+        </div>
+        <h2><strong>票务系统</strong></h2>
+        <form id="loginForm" autocomplete="off" class="m-t">
+            <div class="form-group">
+                <input type="text" class="form-control" name="userName" placeholder="用户名" required="">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="password" placeholder="密码" required="">
+            </div>
+            <input type="button" id="loginBtn" class="btn btn-primary block full-width m-b"
+            onclick="location.href='<%= constructInsideUrl('main/main') %>';" value="登录" >
+        </form>
+        <div id="results"></div>
+    </div>
+</div>

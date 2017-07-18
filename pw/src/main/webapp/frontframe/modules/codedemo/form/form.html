@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 数据表格</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="../../../favicon.ico">
+    <link href="../../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../../css/animate.css" rel="stylesheet">
+    <link href="../../../css/style.css?v=4.1.0" rel="stylesheet">
+
+    <link href="../../../css/plugins/iCheck/custom.css" rel="stylesheet">
+
+    <link href="../../../css/plugins/chosen/chosen.css" rel="stylesheet">
+
+    <link href="../../../css/plugins/cropper/cropper.min.css" rel="stylesheet">
+
+    <link href="../../../css/plugins/switchery/switchery.css" rel="stylesheet">
+
+    <link href="../../../css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
+
+    <link href="../../../css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
+
+    <link href="../../../css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+
+    <link href="../../../css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
+    <link href="../../../css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+
+    <link href="../../../css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                      <div class="ibox-title">
+                          <h5>所有表单元素 <small>包括自定义样式的复选和单选按钮</small></h5>
+                      </div>
+                      <div class="ibox-content">
+                          <form id="queryForm" class="form-horizontal">
+                              <div class="form-group">
+                                  <label class="col-sm-1 control-label">普通</label>
+                                  <div class="col-sm-3">
+                                      <input type="text" name="commontext" class="form-control" required>
+                                  </div>
+
+                                  <label class="col-sm-1 control-label">金额</label>
+                                  <div class="col-sm-3">
+                                      <input type="text" name="money" value="" placeholder="请输入金额" class="form-control money">
+                                  </div>
+
+                                  <label class="col-sm-1 control-label">禁用</label>
+                                  <div class="col-sm-3">
+                                      <input type="text" name="disabledText" value="ss" disabled="" placeholder="" class="form-control">
+                                  </div>
+                              </div>
+                              <div class="hr-line-dashed"></div>
+                              <div class="form-group">
+                                  <label class="col-sm-2 control-label">内联单选按钮</label>
+                                  <div class="col-sm-4">
+                                  <div class="radio radio-inline">
+                                      <input type="radio" id="inlineRadio1" value="option1" name="radioInline" checked="">
+                                      <label for="inlineRadio1"> 选项 01 </label>
+                                  </div>
+                                  <div class="radio radio-inline">
+                                      <input type="radio" id="inlineRadio2" value="option2" name="radioInline">
+                                      <label for="inlineRadio2"> 选项 02 </label>
+                                  </div>
+                                   </div>
+
+                                  <label class="col-sm-2 control-label">内联复选框</label>
+                                  <div class="col-sm-4">
+                                          <div class="checkbox checkbox-inline">
+                                            <input type="checkbox" id="inlineCheckbox1" name="inlineCheckbox1" value="option1">
+                                            <label for="inlineCheckbox1">选项01</label>
+                                        </div>
+                                        <div class="checkbox checkbox-inline">
+                                            <input type="checkbox" id="inlineCheckbox2" name="inlineCheckbox2" value="option2" checked="">
+                                            <label for="inlineCheckbox2">选项02</label>
+                                        </div>
+                                        <div class="checkbox checkbox-inline">
+                                            <input type="checkbox" id="inlineCheckbox3" name="inlineCheckbox3" value="option2">
+                                            <label for="inlineCheckbox3">选项03</label>
+                                        </div>
+                                  </div>
+
+                              </div>
+                              <div class="hr-line-dashed"></div>
+                              <div class="form-group">
+                                  <label class="col-sm-1 control-label">文本框组</label>
+                                  <div class="col-sm-5">
+                                      <div class="input-group m-b"><span class="input-group-addon"> <input type="checkbox" name="groupCheck"> </span>
+                                          <input type="text" name="groupText" class="form-control">
+                                      </div>
+                                  </div>
+
+                                  <label class="col-sm-1 control-label">数字</label>
+                                  <div class="col-sm-5">
+                                      <div class="input-group m-b"><span class="input-group-addon"> <input type="checkbox" name="groupCheck" checked> </span>
+                                          <input type="number" name="number" class="form-control" placeholder="请输入数字">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="hr-line-dashed"></div>
+                              <div class="form-group">
+                                  <div class="row">
+                                      <label class="col-sm-1 control-label">基本示例</label>
+                                      <div class="col-sm-5">
+                                          <div class="input-group">
+                                              <select data-placeholder="请选择省份" class="chosen-select" name="selectone" style="width:350px;" tabindex="2">
+                                                  <option value="">请选择省份</option>
+                                                  <option value="110000" hassubinfo="true">北京</option>
+                                                  <option value="120000" hassubinfo="true">天津</option>
+                                                  <option value="130000" hassubinfo="true">河北省</option>
+                                                  <option value="140000" hassubinfo="true">山西省</option>
+                                                  <option value="150000" hassubinfo="true">内蒙古自治区</option>
+                                                  <option value="210000" hassubinfo="true">辽宁省</option>
+                                                  <option value="220000" hassubinfo="true">吉林省</option>
+                                                  <option value="230000" hassubinfo="true">黑龙江省</option>
+                                                  <option value="310000" hassubinfo="true">上海</option>
+                                                  <option value="320000" hassubinfo="true">江苏省</option>
+                                                  <option value="330000" hassubinfo="true">浙江省</option>
+                                                  <option value="340000" hassubinfo="true">安徽省</option>
+                                                  <option value="350000" hassubinfo="true">福建省</option>
+                                                  <option value="360000" hassubinfo="true">江西省</option>
+                                                  <option value="370000" hassubinfo="true">山东省</option>
+                                                  <option value="410000" hassubinfo="true">河南省</option>
+                                                  <option value="420000" hassubinfo="true">湖北省</option>
+                                                  <option value="430000" hassubinfo="true">湖南省</option>
+                                                  <option value="440000" hassubinfo="true">广东省</option>
+                                                  <option value="450000" hassubinfo="true">广西壮族自治区</option>
+                                                  <option value="460000" hassubinfo="true">海南省</option>
+                                                  <option value="500000" hassubinfo="true">重庆</option>
+                                                  <option value="510000" hassubinfo="true">四川省</option>
+                                                  <option value="520000" hassubinfo="true">贵州省</option>
+                                                  <option value="530000" hassubinfo="true">云南省</option>
+                                                  <option value="540000" hassubinfo="true">西藏自治区</option>
+                                                  <option value="610000" hassubinfo="true">陕西省</option>
+                                                  <option value="620000" hassubinfo="true">甘肃省</option>
+                                                  <option value="630000" hassubinfo="true">青海省</option>
+                                                  <option value="640000" hassubinfo="true">宁夏回族自治区</option>
+                                                  <option value="650000" hassubinfo="true">新疆维吾尔自治区</option>
+                                                  <option value="710000" hassubinfo="true">台湾省</option>
+                                                  <option value="810000" hassubinfo="true">香港特别行政区</option>
+                                                  <option value="820000" hassubinfo="true">澳门特别行政区</option>
+                                                  <option value="990000" hassubinfo="true">海外</option>
+                                              </select>
+                                          </div>
+                                      </div>
+                                          <label class="col-sm-1 control-label">多选</label>
+                                          <div class="col-sm-5">
+                                          <div class="input-group">
+                                              <select data-placeholder="请选择省份" class="chosen-select" multiple name="selectmultiple" style="width:350px;" tabindex="4">
+                                                  <option value="">请选择省份</option>
+                                                  <option value="110000" hassubinfo="true">北京</option>
+                                                  <option value="120000" hassubinfo="true">天津</option>
+                                                  <option value="130000" hassubinfo="true">河北省</option>
+                                                  <option value="140000" hassubinfo="true">山西省</option>
+                                                  <option value="150000" hassubinfo="true">内蒙古自治区</option>
+                                                  <option value="210000" hassubinfo="true">辽宁省</option>
+                                                  <option value="220000" hassubinfo="true">吉林省</option>
+                                                  <option value="230000" hassubinfo="true">黑龙江省</option>
+                                                  <option value="310000" hassubinfo="true">上海</option>
+                                                  <option value="320000" hassubinfo="true">江苏省</option>
+                                                  <option value="330000" hassubinfo="true">浙江省</option>
+                                                  <option value="340000" hassubinfo="true">安徽省</option>
+                                                  <option value="350000" hassubinfo="true">福建省</option>
+                                                  <option value="360000" hassubinfo="true">江西省</option>
+                                                  <option value="370000" hassubinfo="true">山东省</option>
+                                                  <option value="410000" hassubinfo="true">河南省</option>
+                                                  <option value="420000" hassubinfo="true">湖北省</option>
+                                                  <option value="430000" hassubinfo="true">湖南省</option>
+                                                  <option value="440000" hassubinfo="true">广东省</option>
+                                                  <option value="450000" hassubinfo="true">广西壮族自治区</option>
+                                                  <option value="460000" hassubinfo="true">海南省</option>
+                                                  <option value="500000" hassubinfo="true">重庆</option>
+                                                  <option value="510000" hassubinfo="true">四川省</option>
+                                                  <option value="520000" hassubinfo="true">贵州省</option>
+                                                  <option value="530000" hassubinfo="true">云南省</option>
+                                                  <option value="540000" hassubinfo="true">西藏自治区</option>
+                                                  <option value="610000" hassubinfo="true">陕西省</option>
+                                                  <option value="620000" hassubinfo="true">甘肃省</option>
+                                                  <option value="630000" hassubinfo="true">青海省</option>
+                                                  <option value="640000" hassubinfo="true">宁夏回族自治区</option>
+                                                  <option value="650000" hassubinfo="true">新疆维吾尔自治区</option>
+                                                  <option value="710000" hassubinfo="true">台湾省</option>
+                                                  <option value="810000" hassubinfo="true">香港特别行政区</option>
+                                                  <option value="820000" hassubinfo="true">澳门特别行政区</option>
+                                                  <option value="990000" hassubinfo="true">海外</option>
+                                              </select>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="hr-line-dashed"></div>
+                              <div class="form-group">
+                                  <div class="row">
+                                      <label class="col-sm-1 control-label">Date：</label>
+                                      <div class="col-sm-3">
+                                          <input class="form-control layer-date" name="date" placeholder="YYYY-MM-DD" onclick="laydate({istime: false, format: 'YYYY-MM-DD'})">
+                                      </div>
+                                      <label class="col-sm-1 control-label">DateSD：</label>
+                                      <div class="col-sm-7">
+                                          <input placeholder="开始日期" class="form-control layer-date" id="startDate" name="startDate">
+                                          <input placeholder="结束日期" class="form-control layer-date" id="endDate" name="endDate">
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <label class="col-sm-1 control-label">DateTime：</label>
+                                      <div class="col-sm-3">
+                                          <input class="form-control layer-date" name="dateTime" placeholder="YYYY-MM-DD hh:mm:ss" onclick="laydate({istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+                                      </div>
+                                      <label class="col-sm-1 control-label">DateTimeSD：</label>
+                                      <div class="col-sm-7">
+                                          <input placeholder="开始时间" class="form-control layer-date" id="startTime" name="startTime">
+                                          <input placeholder="结束时间" class="form-control layer-date" id="endTime" name="endTime">
+                                      </div>
+                                  </div>
+
+                              </div>
+                              <div class="hr-line-dashed"></div>
+                              <div class="form-group">
+                                  <div class="col-sm-4 col-sm-offset-5">
+                                      <button id="btn_form_query" class="btn btn-primary" type="button">查询</button>
+                                      <button id="btn_form_reset" class="btn btn-white" type="button" modal="reset">重置</button>
+                                  </div>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../../js/bootstrap.min.js?v=3.3.6"></script>
+
+    <script src="../../../js/URL.js?v=1.0.0"></script>
+    <script src="../../../js/content.js?v=1.0.0"></script>
+    <script src="../../../js/jquery.mockjax.js"></script>
+
+    <script src="../../../js/jquery.values.js"></script>
+
+    <!-- iCheck -->
+    <script src="../../../js/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+    </script>
+
+    <!-- Chosen -->
+    <script src="../../../js/plugins/chosen/chosen.jquery.js"></script>
+
+    <!-- JSKnob -->
+    <script src="../../../js/plugins/jsKnob/jquery.knob.js"></script>
+
+    <!-- Input Mask-->
+    <script src="../../../js/plugins/jasny/jasny-bootstrap.min.js"></script>
+
+    <!-- Data picker -->
+    <script src="../../../js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+    <!-- Prettyfile -->
+    <script src="../../../js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+
+    <!-- NouSlider -->
+    <script src="../../../js/plugins/nouslider/jquery.nouislider.min.js"></script>
+
+    <!-- Switchery -->
+    <script src="../../../js/plugins/switchery/switchery.js"></script>
+
+    <!-- IonRangeSlider -->
+    <script src="../../../js/plugins/ionRangeSlider/ion.rangeSlider.min.js"></script>
+
+    <!-- iCheck -->
+    <script src="../../../js/plugins/iCheck/icheck.min.js"></script>
+
+    <!-- MENU -->
+    <script src="../../../js/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+    <!-- Color picker -->
+    <script src="../../../js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+
+    <!-- Clock picker -->
+    <script src="../../../js/plugins/clockpicker/clockpicker.js"></script>
+
+    <!-- Image cropper -->
+    <script src="../../../js/plugins/cropper/cropper.min.js"></script>
+
+    <script src="../../../js/demo/form-advanced-demo.js"></script>
+
+    <!-- layerDate plugin javascript -->
+    <script src="../../../js/plugins/layer/laydate/laydate.js"></script>
+
+    <!-- jQuery Validation plugin javascript-->
+    <script src="../../../js/plugins/validate/jquery.validate.min.js"></script>
+    <script src="../../../js/plugins/validate/additional-methods.js"></script>
+    <script src="../../../js/plugins/validate/messages_zh.min.js"></script>
+
+    <script src="mock/mockData.js"></script>
+
+    <!-- Page-Level Scripts -->
+
+    <script>
+        //日期范围限制
+        var startDate = {
+            elem: '#startDate',
+            format: 'YYYY/MM/DD',
+            min: laydate.now(), //设定最小日期为当前日期
+            max: '2099-06-16', //最大日期
+            istime: false,
+            istoday: false,
+            choose: function (datas) {
+                endDate.min = datas; //开始日选好后，重置结束日的最小日期
+                endDate.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var endDate = {
+            elem: '#endDate',
+            format: 'YYYY/MM/DD',
+            min: laydate.now(),
+            max: '2099-06-16',
+            istime: false,
+            istoday: false,
+            choose: function (datas) {
+                startDate.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+        var startTime = {
+            elem: '#startTime',
+            format: 'YYYY/MM/DD hh:mm:ss',
+            min: laydate.now(), //设定最小日期为当前日期
+            max: '2099-06-16 23:59:59', //最大日期
+            istime: true,
+            istoday: false,
+            choose: function (datas) {
+                endTime.min = datas; //开始日选好后，重置结束日的最小日期
+                endTime.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var endTime = {
+            elem: '#endTime',
+            format: 'YYYY/MM/DD hh:mm:ss',
+            min: laydate.now(),
+            max: '2099-06-16 23:59:59',
+            istime: true,
+            istoday: false,
+            choose: function (datas) {
+                startTime.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+        laydate(startDate);
+        laydate(endDate);
+        laydate(startTime);
+        laydate(endTime);
+
+        var fnFormQuery = function(){
+            alert("fnFormQuery");
+            $("#queryForm").validate();
+            if($("#queryForm").valid()){
+                $.ajax({
+                    url: interUrl.basic + interUrl.form.query,
+                    type: "POST",
+                    data: $("#queryForm").values(),
+                    success: function(res) {
+                        console.log("success: ", res);
+                    },
+                    error:function(e){
+                        console.log("ERROR: ", e);
+                        alert("ajax请求error");
+                    }
+                });
+            }
+        }
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#btn_form_query").on("click",fnFormQuery);
+        });
+    </script>
+
+
+</body>
+
+</html>

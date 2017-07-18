@@ -1,0 +1,61 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                  <div class="ibox-title">
+                      <h5>表单</h5>
+                  </div>
+                  <div class="ibox-content">
+                      <form id="pagingForm" class="form-horizontal">
+                          <div class="form-group">
+                              <label class="col-sm-2 control-label">数据模式</label>
+                              <div class="col-sm-4">
+                              <div class="radio radio-inline">
+                                  <input type="radio" id="inlineRadio1" value="option1" name="radioInline" checked="">
+                                  <label for="inlineRadio1"> 选项 01 </label>
+                              </div>
+                              <div class="radio radio-inline">
+                                  <input type="radio" id="inlineRadio2" value="option2" name="radioInline">
+                                  <label for="inlineRadio2"> 选项 02 </label>
+                              </div>
+                          </div>
+                          <div class="hr-line-dashed"></div>
+                          <div class="form-group">
+                              <div class="col-sm-4 col-sm-offset-5">
+                                  <button id="query_table" class="btn btn-primary" type="button">查询</button>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>基本 <small>分类，查找</small></h5>
+                </div>
+                <div id="main" class="ibox-content">
+                    <table id="pw_table"
+                        data-toggle="table"
+                        data-ajax="dataLoad"
+                        data-click-to-select="true"
+                        data-height="500"
+                        data-pagination="true"
+                        data-side-pagination="server"
+                        data-query-params="queryParams"
+                        data-page-list="[10, 20, 50]"
+                        >
+                        <thead>
+                            <tr>
+                                <th data-field="state" data-checkbox="true"></th>
+                                <th data-field="a1">a1</th>
+                                <th data-field="b1">b1</th>
+                                <th data-field="c1">c1</th>
+                                <th data-field="d1">d1</th>
+                                <th data-field="e1">e1</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

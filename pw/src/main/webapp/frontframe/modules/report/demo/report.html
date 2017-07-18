@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>报表</title>
+
+  <link href="../../../favicon.ico" rel="shortcut icon">
+
+  <link href="../../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+  <link href="../../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+  <link href="../../../css/animate.css" rel="stylesheet">
+  <link href="../../../css/style.css?v=4.1.0" rel="stylesheet">
+
+  <!-- Bootstrap Tables plugin css -->
+  <link href="../../../css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+
+  <!-- bootstrap-dialog plugin css -->
+  <link href="../../../css/bootstrap-dialog.css" rel="stylesheet">
+
+  <link href="../../../css/plugins/chosen/chosen.css" rel="stylesheet">
+
+
+</head>
+
+<body class="gray-bg">
+  <div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+          <div class="ibox-title">
+            <h5>报表</h5>
+          </div>
+          <div class="ibox-content">
+            <form id="reportForm" class="form-horizontal">
+              <div class="form-group">
+                <div class="row">
+                  <label class="col-sm-1 control-label">车站</label>
+                  <div class="col-sm-5">
+                    <div class="input-group">
+                      <select data-placeholder="请选择车站" class="chosen-select" name="station_id" style="width:350px;" tabindex="2">
+                        <option value="">请选择车站</option>
+                        <option value="257" hassubinfo="true">升仙湖</option>
+                        <option value="421" hassubinfo="true">非遗博览园站</option>
+                        <option value="422" hassubinfo="true">蔡桥站</option>
+                        <option value="423" hassubinfo="true">中坝站</option>
+                        <option value="424" hassubinfo="true">成都西站</option>
+                        <option value="425" hassubinfo="true">清江西路站</option>
+                        <option value="426" hassubinfo="true">文化宫站</option>
+                        <option value="427" hassubinfo="true">西南财大站</option>
+                        <option value="428" hassubinfo="true">草堂北路站</option>
+                        <option value="429" hassubinfo="true">中医学院站</option>
+                        <option value="430" hassubinfo="true">宽窄巷子站</option>
+                        <option value="431" hassubinfo="true">骡马市站</option>
+                        <option value="432" hassubinfo="true">太升南路站</option>
+                        <option value="433" hassubinfo="true">市二医院站</option>
+                        <option value="434" hassubinfo="true">玉双路站</option>
+                        <option value="435" hassubinfo="true">双桥路站</option>
+                        <option value="436" hassubinfo="true">万年场站</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="hr-line-dashed"></div>
+              <div class="form-group">
+                <div class="col-sm-4 col-sm-offset-5">
+                  <button id="btn_form_query" class="btn btn-primary" type="button">查询</button>
+                  <button id="btn_form_reset" class="btn btn-primary" type="button" modal="reset">重置</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="ibox float-e-margins">
+          <div class="ibox-title">
+            <h5>数据</h5>
+          </div>
+          <div id="content-main" class="ibox-content">
+            <iframe id="frame" class="J_iframe" name="iframe0" width="100%" height="500" src="" frameborder="0" data-id="" seamless></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 全局js -->
+  <script src="../../../js/jquery.min.js?v=2.1.4"></script>
+  <script src="../../../js/bootstrap.min.js?v=3.3.6"></script>
+
+  <!-- Bootstrap table plugin javascript -->
+  <script src="../../../js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+  <script src="../../../js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+  <script src="../../../js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+  <!-- layerDate plugin javascript -->
+  <script src="../../../js/plugins/layer/laydate/laydate.js"></script>
+
+  <!-- jQuery Validation plugin javascript-->
+  <script src="../../../js/plugins/validate/jquery.validate.min.js"></script>
+  <script src="../../../js/plugins/validate/additional-methods.js"></script>
+  <script src="../../../js/plugins/validate/messages_zh.min.js"></script>
+
+  <!-- bootstrap-dialog plugin javascript-->
+  <script src="../../../js/bootstrap-dialog.js"></script>
+
+  <!-- jquery.mockjax plugin javascript -->
+  <script src="../../../js/jquery.mockjax.js"></script>
+
+  <!-- Chosen -->
+  <script src="../../../js/plugins/chosen/chosen.jquery.js"></script>
+
+  <!-- 自定义js -->
+  <script src="../../../js/URL.js?v=1.0.0"></script>
+  <script src="../../../js/content.js?v=1.0.0"></script>
+  <script src="mock/mockData.js"></script>
+  <script src="../../../js/jquery.values.js"></script>
+  <script src="../../../js/common.js"></script>
+  <script src="page.js"></script>
+
+</body>
+
+</html>

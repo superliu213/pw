@@ -1,0 +1,9 @@
+.DS_Store
+.svn
+.externalToolBuilders
+.idea
+.settings
+.svn
+*.class
+*.log
+target

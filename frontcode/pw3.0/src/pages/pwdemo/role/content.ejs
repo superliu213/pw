@@ -1,0 +1,119 @@
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+         <div class="col-sm-8">
+            <div class="ibox float-e-margins">
+                  <div class="ibox-title">
+                      <h5>表单</h5>
+                  </div>
+                  <div class="ibox-content">
+                      <form id="roleForm" class="form-horizontal">
+                          <div class="form-group">
+                            <button id="add_table" class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">添加</button>
+                            <button id="update_table" class="btn btn-primary" type="button">编辑</button>
+                            <button id="remove_table" class="btn btn-primary" type="button">删除</button>
+                            <button id="configure_group" class="btn btn-primary" type="button">配置机构</button>
+                            <button id="import_table" class="btn btn-primary" type="button">导入</button>
+                            <button id="export_table" class="btn btn-primary" type="button">导出</button>
+                            <button id="excel_download" class="btn btn-primary" type="button" onclick="fnConfigureGroup()">模板下载</button>
+                            <button id="query_table" class="btn btn-primary" type="button">查询</button>
+                            <button id="reset_form" class="btn btn-primary" type="button">重置</button>
+                          </div>
+                      </form>
+                  </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>基本 <small>分类，查找</small></h5>
+                </div>
+                <div id="main" class="ibox-content">
+                    <table id="pw_table"
+                        data-toggle="table"
+                        data-ajax="dataLoad"
+                        data-click-to-select="true"
+                        data-height="500"
+                        data-pagination="true"
+                        data-side-pagination="server"
+                        data-query-params="queryParams"
+                        data-page-list="[10, 20, 50]"
+                        >
+                        <thead>
+                            <tr>
+                                <th data-field="state" data-checkbox="true"></th>
+                                <th data-field="id">编号</th>
+                                <th data-field="role_id">角色编号</th>
+                                <th data-field="role_name">角色名称</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+         </div>
+         <div class="col-sm-4">
+           <div class="ibox float-e-margins">
+              <div class="ibox-title">
+                  <h5>JSON示例</h5>
+                  <div class="ibox-tools">
+                       <a class="collapse-link">
+                           <i class="fa fa-chevron-up"></i>
+                       </a>
+                       <a class="close-link">
+                           <i class="fa fa-times"></i>
+                       </a>
+                  </div>
+              </div>
+              <div class="ibox-content">
+                      <button id="open_tree" type="button" class="btn btn-primary">展开</button>
+                      <button id="close_tree" type="button" class="btn btn-primary">关闭</button>
+                      <button id="save_tree" type="button" class="btn btn-primary">保存</button>
+                  <div id="using_json_tree"></div>
+                  <!-- <div class="col-sm-offset-10">
+                    <button id="open_tree" type="button" class="btn btn-primary">展开</button>
+                    <button id="close_tree" type="button" class="btn btn-primary">关闭</button>
+                    <button id="save_tree" type="button" class="btn btn-primary">保存</button>
+                 </div> -->
+              </div>
+           </div>
+         </div>
+    </div>
+</div>
+
+<div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title">窗口标题</h4>
+            </div>
+                <div class="modal-body">
+                    <form id="dialogForm" class="form-horizontal">
+                    <div class="row">
+                        <input type="hidden" name="flag">
+                        <label class="col-sm-2 col-sm-offset-1 control-label">编号</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="id" class="form-control" required>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <label class="col-sm-2 col-sm-offset-1 control-label">角色编号</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="role_id" class="form-control" required>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <label class="col-sm-2 col-sm-offset-1 control-label">角色名称</label>
+                        <div class="col-sm-5">
+                            <input type="text" name="role_name" class="form-control" required>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button id="save_dialog" type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>

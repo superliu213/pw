@@ -1,0 +1,21 @@
+{
+  "name": "dll",
+  "content": {
+    "./css/animate.css": {
+      "id": 0,
+      "meta": {}
+    },
+    "./css/font-awesome.css": {
+      "id": 1,
+      "meta": {}
+    },
+    "./css/style.css": {
+      "id": 2,
+      "meta": {}
+    },
+    "./node_modules/.3.3.7@bootstrap/dist/css/bootstrap.min.css": {
+      "id": 3,
+      "meta": {}
+    }
+  }
+}
