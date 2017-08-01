@@ -99,7 +99,7 @@ $ mvn clean
 
 ## 问答
 > 工具
-  - 如何去除在eclipse部署项目时，去除部署路径中的项目名
+  - 如何去除在eclipse部署项目时，去除部署路径中的项目名  
     配置server属性-Modules-Web Module 中的path为/
   - 本地包如何添加？
   以下是一个范例：
