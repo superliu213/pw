@@ -3,29 +3,19 @@ var resetDataUrl = interUrl.basic + interUrl.role.init;
 var form = "roleForm";
 
 var fnUpdateTable = function() {
-  var selections = $("#pw_table").bootstrapTable('getSelections');
-  if (selections.length == 0) {
-    BootstrapDialog.show({
-      title: '提示信息',
-      message: '未选择编辑行'
-    });
+  if (!fnSelectOne()) {
     return;
   }
 
-  if (selections.length > 1) {
-    BootstrapDialog.show({
-      title: '提示信息',
-      message: '只能编辑一行'
-    });
-    return;
-  }
+  var selections = $("#pw_table").bootstrapTable('getSelections');
 
   $('#myModal').on('show.bs.modal', function() {
-    $("input[name ='flag']")[0].value = "update";
-    $("input[name ='id']")[0].value = selections[0].id;
-    $("input[name ='roleId']")[0].value = selections[0].roleId;
-    $("input[name ='roleDesc']")[0].value = selections[0].roleDesc;
-    $("input[name ='remark']")[0].value = selections[0].remark;
+    $("#dialogForm")[0].reset();
+    $("#myModal input[name ='flag']")[0].value = "update";
+    $("#myModal input[name ='id']")[0].value = selections[0].id;
+    $("#myModal input[name ='roleId']")[0].value = selections[0].roleId;
+    $("#myModal input[name ='roleDesc']")[0].value = selections[0].roleDesc;
+    $("#myModal input[name ='remark']")[0].value = checkNullValue(selections[0].remark);
   });
 
   $('#myModal').modal('show');
@@ -53,7 +43,6 @@ var fnRemoveTable = function(params) {
         if (authorityInterceptorJump(res)) {
           return;
         }
-        //console.log("success: ", res);
 
         BootstrapDialog.show({
           title: ' 提示信息',
@@ -67,8 +56,10 @@ var fnRemoveTable = function(params) {
         });
       },
       error: function(e) {
-        //console.log("ERROR: ", e);
-        alert("ajax请求error");
+        BootstrapDialog.show({
+          title: '错误信息',
+          message: 'ajax请求error'
+        });
       }
     });
   }
@@ -85,7 +76,6 @@ var fnConfigureFunction = function(params) {
 }
 
 var fnSaveDialog = function() {
-  //console.log($("input[name ='flag']")[0].value);
   $("#dialogForm").validate();
   if ($("#dialogForm").valid()) {
     $.ajax({
@@ -99,7 +89,6 @@ var fnSaveDialog = function() {
         if (authorityInterceptorJump(res)) {
           return;
         }
-        //console.log("success: ", res);
 
         BootstrapDialog.show({
           title: ' 提示信息',
@@ -113,7 +102,6 @@ var fnSaveDialog = function() {
         });
       },
       error: function(e) {
-        //console.log("ERROR: ", e);
         BootstrapDialog.show({
           title: '错误信息',
           message: 'ajax请求error'
@@ -153,7 +141,6 @@ var fnSaveTree = function() {
       if (authorityInterceptorJump(res)) {
         return;
       }
-      //console.log("success:", res);
       BootstrapDialog.show({
         title: ' 提示信息',
         message: '保存成功'
@@ -163,7 +150,6 @@ var fnSaveTree = function() {
       }, interUrl.basic + interUrl.role.function)
     },
     error: function(e) {
-      //console.log("error:", e);
       BootstrapDialog.show({
         title: '错误信息',
         message: 'ajax请求error'
@@ -177,8 +163,6 @@ $(document).ready(function() {
   $("#update_table").on("click", fnUpdateTable);
   $("#remove_table").on("click", fnRemoveTable);
   $("#configure_function").on("click", fnConfigureFunction);
-  $("#import_table").on("click", fnImportTable);
-  $("#export_table").on("click", fnExportTable);
   $("#query_table").on("click", fnQueryTable);
   $("#save_dialog").on("click", fnSaveDialog);
   $("#save_tree").on("click", fnSaveTree);

@@ -60,7 +60,9 @@ public class LoginController {
 
 	@ResponseBody
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public String login(HttpServletResponse response, HttpServletRequest request, String userId, String password) {		
+	public String login(HttpServletResponse response, HttpServletRequest request, String userId,
+						String password) {
+
 		DataDto dto = new DataDto();
 
 		try {

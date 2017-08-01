@@ -8,8 +8,8 @@ import com.springapp.mvc.entiy.SysRole;
 
 public abstract interface RoleServiceImpl extends BusinessService {
 
-	PageHolder<SysRole> getRoles(Integer page, Integer pageSize);
-	
+	PageHolder<SysRole> getRoles(Integer page, Integer pageSize, String roleId, String roleDesc);
+
 	List<SysRole> getAllRoles();
 
 	void removeRoleByKey(Long id);

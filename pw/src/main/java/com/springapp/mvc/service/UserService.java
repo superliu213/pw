@@ -3,6 +3,11 @@ package com.springapp.mvc.service;
 import java.util.Date;
 import java.util.List;
 
+import com.springapp.common.application.ApplicationGlobalNames;
+import com.springapp.common.op.LikeMatchMode;
+import com.springapp.common.op.SqlRestrictions;
+import com.springapp.common.util.MD5Util;
+import com.springapp.exception.ApplicationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
@@ -17,7 +22,7 @@ import com.springapp.mvc.entiy.SysUser;
 @Repository("userService")
 public class UserService extends BaseHibernateDao implements UserServiceImpl {
 
-	Log logger = LogFactory.getLog(SyncLogService.class);
+	Log logger = LogFactory.getLog(UserService.class);
 
 	public void initData() {
 		Date date = new Date();
@@ -65,12 +70,16 @@ public class UserService extends BaseHibernateDao implements UserServiceImpl {
 	}
 
 	@Override
-	public PageHolder<SysUser> getUsers(Integer page, Integer pageSize) {
+	public PageHolder<SysUser> getUsers(Integer page, Integer pageSize, String userId, String userName,
+			String ifValid) {
 		int totalCount = 0;
 
 		List<SysUser> datas = null;
 
-		String hql = "from SysUser t";
+		String hql = "from SysUser t where 1=1 ";
+		hql += SqlRestrictions.eq("t.userId", userId);
+		hql += SqlRestrictions.like("t.userName", userName, LikeMatchMode.BOTHADD);
+		hql += SqlRestrictions.eq("t.ifValid", ifValid);
 
 		try {
 			datas = (List<SysUser>) this.query(hql, page - 1, pageSize);
@@ -82,6 +91,7 @@ public class UserService extends BaseHibernateDao implements UserServiceImpl {
 
 		} catch (OPException e) {
 			logger.error("查询失败", e);
+			throw new ApplicationException(e);
 		}
 
 		return new PageHolder<SysUser>(page, pageSize, totalCount, datas);
@@ -96,6 +106,7 @@ public class UserService extends BaseHibernateDao implements UserServiceImpl {
 			result = (List<SysUser>) this.retrieveObjs(hql);
 		} catch (OPException e) {
 			logger.error("查询失败", e);
+			throw new ApplicationException(e);
 		}
 		return result;
 	}
@@ -107,6 +118,7 @@ public class UserService extends BaseHibernateDao implements UserServiceImpl {
 			this.execHqlUpdateLP(hql, id);
 		} catch (OPException e) {
 			logger.error("删除失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 
@@ -116,6 +128,7 @@ public class UserService extends BaseHibernateDao implements UserServiceImpl {
 			this.saveObj(user);
 		} catch (OPException e) {
 			logger.error("添加失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 
@@ -125,6 +138,7 @@ public class UserService extends BaseHibernateDao implements UserServiceImpl {
 			this.saveOrUpdateObj(user);
 		} catch (OPException e) {
 			logger.error("更新失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 
@@ -135,12 +149,44 @@ public class UserService extends BaseHibernateDao implements UserServiceImpl {
 		String hql = "from SysUser t where t.userId = ? and t.userPassWord = ?";
 
 		try {
-			List<?> retrieveObjsLP = this.retrieveObjsLP(hql, userId, password);
+			List<?> retrieveObjsLP = this.retrieveObjsLP(hql, userId, MD5Util.MD5(password));
 			if (retrieveObjsLP == null || retrieveObjsLP.size() == 0) {
 				result = false;
 			}
 		} catch (Exception e) {
 			logger.error("查询失败", e);
+			throw new ApplicationException(e);
+		}
+
+		return result;
+	}
+
+	@Override
+	public void passwordreset(Long id) {
+		try {
+			SysUser sysUser = (SysUser) this.findObj(SysUser.class, id);
+			sysUser.setUserPassWord(MD5Util.MD5(ApplicationGlobalNames.RESET_PASSWD));
+			this.updateObj(sysUser);
+		} catch (Exception e) {
+			logger.error("重置失败", e);
+			throw new ApplicationException(e);
+		}
+	}
+
+	@Override
+	public String updatepassword(Long id, String oldPassword, String newPassword) {
+		String result = "更新成功";
+		try {
+			SysUser sysUser = (SysUser) this.findObj(SysUser.class, id);
+			if (sysUser.getUserPassWord().equals(MD5Util.MD5(oldPassword))) {
+				sysUser.setUserPassWord(MD5Util.MD5(newPassword));
+				this.updateObj(sysUser);
+			} else {
+				result = "旧密码同数据库数据不一致，请检查";
+			}
+		} catch (Exception e) {
+			logger.error("更新失败", e);
+			throw new ApplicationException("更新失败", e);
 		}
 
 		return result;

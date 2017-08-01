@@ -20,12 +20,8 @@ public class GroupService extends BaseHibernateDao implements GroupServiceImpl {
 	Log logger = LogFactory.getLog(getClass());
 
 	@Override
-	public PageHolder<SysGroup> getGroups(Integer page, Integer pageSize) {
-		// if (dbFunction == null) {
-		// initData();
-		// }
-		//
-		// return dbFunction;
+	public PageHolder<SysGroup> getGroups(Integer page, Integer pageSize, String groupId, String groupName,
+			String groupLever, String groupParentId) {
 		int totalCount = 0;
 
 		List<SysGroup> datas = new ArrayList<>();

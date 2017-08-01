@@ -16,7 +16,7 @@ public class ApplicationGlobalNames {
 	public static String AUTH_ID = "AUTH_ID";
 
 	public static String SUPER_USER = "admin";
-	public static String RESET_PASSWD = "sa";
+	public static String RESET_PASSWD = "000000";
 			
 	/**
 	 * 默认构造函数

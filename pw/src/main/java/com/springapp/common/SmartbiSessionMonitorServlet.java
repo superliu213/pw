@@ -1,27 +1,25 @@
 package com.springapp.common;
 
 
-import java.io.IOException;
+import com.springapp.json.JSONUtil;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import smartbi.net.sf.json.JSONArray;
+import smartbi.net.sf.json.JSONObject;
+
+import smartbi.sdk.ClientConnector;
+import smartbi.sdk.InvokeResult;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.springapp.common.busilog.service.SyncLogService;
-import com.springapp.json.JSONUtil;
-
-import smartbi.net.sf.json.JSONArray;
-import smartbi.net.sf.json.JSONObject;
-import smartbi.sdk.ClientConnector;
-import smartbi.sdk.InvokeResult;
+import java.io.IOException;
 
 public class SmartbiSessionMonitorServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    Log logger = LogFactory.getLog (SyncLogService.class);
+	private Log logger = LogFactory.getLog(getClass());
 
 	String SmartbiURL = "http://127.0.0.1:8080/smartbi_proxy";
 	ClientConnector smartbiConn = new ClientConnector(SmartbiURL);

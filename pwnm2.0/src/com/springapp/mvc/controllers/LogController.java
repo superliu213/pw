@@ -27,7 +27,8 @@ public class LogController {
 
 	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public String list(HttpServletResponse response, HttpServletRequest request, Integer page, Integer pageSize) {
+	public String list(HttpServletResponse response, HttpServletRequest request, Integer page, Integer pageSize,
+			String startTime, String endTime, String operatorId, String logType, String logLevel) {
 
 		String result = "";
 		String message = "";
@@ -42,7 +43,8 @@ public class LogController {
 		}
 
 		try {
-			PageHolder<SysLog> logs = logService.getLogs(page, pageSize);
+			PageHolder<SysLog> logs = logService.getLogs(page, pageSize, startTime, endTime, operatorId, logType,
+					logLevel);
 			dto.setTotalItem(logs.getTotalCount());
 			dto.setData(logs.getDatas());
 		} catch (Exception e) {

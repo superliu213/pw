@@ -30,7 +30,8 @@ public class FunctionController {
 
 	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public String list(HttpServletResponse response, HttpServletRequest request, Integer page, Integer pageSize) {
+	public String list(HttpServletResponse response, HttpServletRequest request, Integer page, Integer pageSize,
+			String functionId, String functionName, String functionType, String functionParentId) {
 
 		String result = "";
 		String message = "查询成功";
@@ -45,7 +46,8 @@ public class FunctionController {
 		}
 
 		try {
-			PageHolder<SysFunction> functions = functionService.getFunctions(page, pageSize);
+			PageHolder<SysFunction> functions = functionService.getFunctions(page, pageSize, functionId, functionName,
+					functionType, functionParentId);
 			dto.setTotalItem(functions.getTotalCount());
 			dto.setData(functions.getDatas());
 		} catch (Exception e) {

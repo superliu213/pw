@@ -3,6 +3,9 @@ package com.springapp.mvc.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.springapp.common.op.LikeMatchMode;
+import com.springapp.common.op.SqlRestrictions;
+import com.springapp.exception.ApplicationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
@@ -18,12 +21,18 @@ public class FunctionService extends BaseHibernateDao implements FunctionService
 	Log logger = LogFactory.getLog(getClass());
 
 	@Override
-	public PageHolder<SysFunction> getFunctions(Integer page, Integer pageSize) {
+	public PageHolder<SysFunction> getFunctions(Integer page, Integer pageSize, String functionId, String functionName,
+			String functionType, String functionParentId) {
 		int totalCount = 0;
 
 		List<SysFunction> datas = null;
 
-		String hql = "from SysFunction t order by t.functionType, t.orderNo";
+		String hql = "from SysFunction t where 1=1 ";
+		hql += SqlRestrictions.eq("t.functionId", functionId);
+		hql += SqlRestrictions.like("t.functionName", functionName, LikeMatchMode.BOTHADD);
+		hql += SqlRestrictions.eq("t.functionType", functionType);
+		hql += SqlRestrictions.eq("t.functionParentId", functionParentId);
+		hql += " order by t.functionType, t.orderNo";
 
 		try {
 			datas = (List<SysFunction>) this.queryLP(hql, page - 1, pageSize);
@@ -35,6 +44,7 @@ public class FunctionService extends BaseHibernateDao implements FunctionService
 
 		} catch (OPException e) {
 			logger.error("查询失败", e);
+			throw new ApplicationException(e);
 		}
 
 		return new PageHolder<SysFunction>(page, pageSize, totalCount, datas);
@@ -48,6 +58,7 @@ public class FunctionService extends BaseHibernateDao implements FunctionService
 			result = (List<SysFunction>) this.retrieveObjs(hql);
 		} catch (OPException e) {
 			logger.error("查询失败", e);
+			throw new ApplicationException(e);
 		}
 		return result;
 	}
@@ -59,6 +70,7 @@ public class FunctionService extends BaseHibernateDao implements FunctionService
 			this.execHqlUpdateLP(hql, id);
 		} catch (OPException e) {
 			logger.error("删除失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 
@@ -68,6 +80,7 @@ public class FunctionService extends BaseHibernateDao implements FunctionService
 			this.saveObj(function);
 		} catch (OPException e) {
 			logger.error("添加失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 
@@ -77,6 +90,7 @@ public class FunctionService extends BaseHibernateDao implements FunctionService
 			this.updateObj(function);
 		} catch (OPException e) {
 			logger.error("更新失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 
@@ -259,6 +273,7 @@ public class FunctionService extends BaseHibernateDao implements FunctionService
 				result = (List<String>) this.querySQL(sql, user);
 			} catch (OPException e) {
 				logger.error("查询失败", e);
+				throw new ApplicationException(e);
 			}
 		} else {
 			result = new ArrayList<>();
@@ -271,54 +286,59 @@ public class FunctionService extends BaseHibernateDao implements FunctionService
 	public List<SysFunction> getFunctions(String userId) {
 		List<SysFunction> result = new ArrayList<>();
 
-		if ("admin".equals(userId)) {
-			result = getAllFunctions();
-		} else {
-			String sql = " SELECT * FROM (SELECT c.* " + "FROM  sys_user_role a, sys_role_function b, sys_function c "
-					+ "WHERE a.role_id = b.role_id AND b.function_id = c.function_id AND a.user_id = ? " + "UNION "
-					+ "SELECT e.* FROM sys_function e "
-					+ "WHERE e.function_id IN (SELECT DISTINCT c.function_parent_id "
-					+ "                       FROM sys_user_role a, sys_role_function b,sys_function c "
-					+ "                       WHERE a.role_id = b.role_id AND c.function_type = 3 AND b.function_id = c.function_id "
-					+ "                       AND a.user_id = ?) " + "UNION " + "SELECT f.* FROM sys_function f "
-					+ "WHERE f.FUNCTION_ID IN (SELECT DISTINCT e.FUNCTION_PARENT_ID "
-					+ "                        FROM sys_function e "
-					+ "                        WHERE e.function_id IN (SELECT DISTINCT c.function_parent_id "
-					+ "                                               FROM sys_user_role a,sys_role_function b,sys_function c "
-					+ "                                               WHERE a.role_id = b.role_id AND c.function_type = 3 "
-					+ "                                               AND b.function_id = c.function_id AND a.user_id = ?) "
-					+ "                        ) " + "                    )";
-			List<Object[]> tempList = null;
-			try {
-				tempList = (List<Object[]>) this.querySQL(sql, userId, userId, userId);
-			} catch (OPException e) {
-				logger.error("查询失败", e);
-			}
+		try{
+			if ("admin".equals(userId)) {
+				result = getAllFunctions();
+			} else {
+				String sql = " SELECT * FROM (SELECT c.* " + "FROM  sys_user_role a, sys_role_function b, sys_function c "
+						+ "WHERE a.role_id = b.role_id AND b.function_id = c.function_id AND a.user_id = ? " + "UNION "
+						+ "SELECT e.* FROM sys_function e "
+						+ "WHERE e.function_id IN (SELECT DISTINCT c.function_parent_id "
+						+ "                       FROM sys_user_role a, sys_role_function b,sys_function c "
+						+ "                       WHERE a.role_id = b.role_id AND c.function_type = 3 AND b.function_id = c.function_id "
+						+ "                       AND a.user_id = ?) " + "UNION " + "SELECT f.* FROM sys_function f "
+						+ "WHERE f.FUNCTION_ID IN (SELECT DISTINCT e.FUNCTION_PARENT_ID "
+						+ "                        FROM sys_function e "
+						+ "                        WHERE e.function_id IN (SELECT DISTINCT c.function_parent_id "
+						+ "                                               FROM sys_user_role a,sys_role_function b,sys_function c "
+						+ "                                               WHERE a.role_id = b.role_id AND c.function_type = 3 "
+						+ "                                               AND b.function_id = c.function_id AND a.user_id = ?) "
+						+ "                        ) " + "                    )";
+				List<Object[]> tempList = null;
+				try {
+					tempList = (List<Object[]>) this.querySQL(sql, userId, userId, userId);
+				} catch (OPException e) {
+					logger.error("查询失败", e);
+				}
 
-			for (Object[] obj : tempList) {
-				SysFunction sysFunction = new SysFunction();
-				Long id = Long.valueOf(obj[0].toString());
-				String functionId = (String) obj[1];
-				String functionName = (String) obj[2];
-				Short functionType = Short.valueOf(obj[3].toString());
-				String functionParentId = obj[4] == null ? null : (String) obj[4];
-				String functionUrl = obj[5] == null ? null : (String) obj[5];
-				Integer orderNo = Integer.valueOf(obj[6].toString());
-				String functionLogo = obj[7] == null ? null : (String) obj[7];
-				String buttonPosition = obj[8] == null ? null : (String) obj[8];
-				String remark = obj[9] == null ? null : (String) obj[9];
-				sysFunction.setButtonPosition(buttonPosition);
-				sysFunction.setFunctionId(functionId);
-				sysFunction.setFunctionLogo(functionLogo);
-				sysFunction.setFunctionName(functionName);
-				sysFunction.setFunctionParentId(functionParentId);
-				sysFunction.setFunctionType(functionType);
-				sysFunction.setFunctionUrl(functionUrl);
-				sysFunction.setId(id);
-				sysFunction.setOrderNo(orderNo);
-				sysFunction.setRemark(remark);
-				result.add(sysFunction);
+				for (Object[] obj : tempList) {
+					SysFunction sysFunction = new SysFunction();
+					Long id = Long.valueOf(obj[0].toString());
+					String functionId = (String) obj[1];
+					String functionName = (String) obj[2];
+					Short functionType = Short.valueOf(obj[3].toString());
+					String functionParentId = obj[4] == null ? null : (String) obj[4];
+					String functionUrl = obj[5] == null ? null : (String) obj[5];
+					Integer orderNo = Integer.valueOf(obj[6].toString());
+					String functionLogo = obj[7] == null ? null : (String) obj[7];
+					String buttonPosition = obj[8] == null ? null : (String) obj[8];
+					String remark = obj[9] == null ? null : (String) obj[9];
+					sysFunction.setButtonPosition(buttonPosition);
+					sysFunction.setFunctionId(functionId);
+					sysFunction.setFunctionLogo(functionLogo);
+					sysFunction.setFunctionName(functionName);
+					sysFunction.setFunctionParentId(functionParentId);
+					sysFunction.setFunctionType(functionType);
+					sysFunction.setFunctionUrl(functionUrl);
+					sysFunction.setId(id);
+					sysFunction.setOrderNo(orderNo);
+					sysFunction.setRemark(remark);
+					result.add(sysFunction);
+				}
 			}
+		}catch (Exception e){
+			logger.error("查询失败", e);
+			throw new ApplicationException(e);
 		}
 
 		return result;

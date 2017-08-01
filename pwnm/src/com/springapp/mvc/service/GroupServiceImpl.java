@@ -8,7 +8,8 @@ import com.springapp.mvc.entiy.SysGroup;
 
 public interface GroupServiceImpl extends BusinessService {
 	
-	PageHolder<SysGroup> getGroups(Integer page, Integer pageSize);
+	PageHolder<SysGroup> getGroups(Integer page, Integer pageSize, String groupId, String groupName, String groupLever,
+			String groupParentId);
 
 	List<SysGroup> getAllGroups();
 

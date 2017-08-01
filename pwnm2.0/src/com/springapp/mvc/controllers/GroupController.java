@@ -39,7 +39,8 @@ public class GroupController {
 
 	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public String list(HttpServletResponse response, HttpServletRequest request, Integer page, Integer pageSize) {
+	public String list(HttpServletResponse response, HttpServletRequest request, Integer page, Integer pageSize,
+			String groupId, String groupName, String groupLever, String groupParentId) {
 
 		String result = "";
 		String message = "";
@@ -54,7 +55,8 @@ public class GroupController {
 		}
 
 		try {
-			PageHolder<SysGroup> groups = groupService.getGroups(page, pageSize);
+			PageHolder<SysGroup> groups = groupService.getGroups(page, pageSize, groupId, groupName, groupLever,
+					groupParentId);
 			dto.setTotalItem(groups.getTotalCount());
 			dto.setData(groups.getDatas());
 		} catch (Exception e) {

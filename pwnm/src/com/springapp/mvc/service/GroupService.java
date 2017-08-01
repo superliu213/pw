@@ -2,6 +2,9 @@ package com.springapp.mvc.service;
 
 import java.util.List;
 
+import com.springapp.common.op.LikeMatchMode;
+import com.springapp.common.op.SqlRestrictions;
+import com.springapp.exception.ApplicationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
@@ -19,12 +22,18 @@ public class GroupService extends BaseHibernateDao implements GroupServiceImpl {
 	Log logger = LogFactory.getLog(getClass());
 
 	@Override
-	public PageHolder<SysGroup> getGroups(Integer page, Integer pageSize) {
+	public PageHolder<SysGroup> getGroups(Integer page, Integer pageSize, String groupId, String groupName,
+			String groupLever, String groupParentId) {
 		int totalCount = 0;
 
 		List<SysGroup> datas = null;
 
-		String hql = "from SysGroup t order by t.groupLever, t.orderNo";
+		String hql = "from SysGroup t where 1=1 ";
+		hql += SqlRestrictions.eq("t.groupId", groupId);
+		hql += SqlRestrictions.like("t.groupName", groupName, LikeMatchMode.BOTHADD);
+		hql += SqlRestrictions.eq("t.groupLever", groupLever);
+		hql += SqlRestrictions.eq("t.groupParentId", groupParentId);
+		hql += " order by t.groupLever, t.orderNo";
 
 		try {
 			datas = (List<SysGroup>) this.queryLP(hql, page - 1, pageSize);
@@ -36,6 +45,7 @@ public class GroupService extends BaseHibernateDao implements GroupServiceImpl {
 
 		} catch (OPException e) {
 			logger.error("查询失败", e);
+			throw new ApplicationException(e);
 		}
 
 		return new PageHolder<SysGroup>(page, pageSize, totalCount, datas);
@@ -49,6 +59,7 @@ public class GroupService extends BaseHibernateDao implements GroupServiceImpl {
 			result = (List<SysGroup>) this.retrieveObjs(hql);
 		} catch (OPException e) {
 			logger.error("查询失败", e);
+			throw new ApplicationException(e);
 		}
 		return result;
 	}
@@ -60,6 +71,7 @@ public class GroupService extends BaseHibernateDao implements GroupServiceImpl {
 			this.execHqlUpdateLP(hql, id);
 		} catch (OPException e) {
 			logger.error("删除失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 
@@ -69,6 +81,7 @@ public class GroupService extends BaseHibernateDao implements GroupServiceImpl {
 			this.saveObj(group);
 		} catch (OPException e) {
 			logger.error("添加失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 
@@ -78,6 +91,7 @@ public class GroupService extends BaseHibernateDao implements GroupServiceImpl {
 			this.updateObj(group);
 		} catch (OPException e) {
 			logger.error("更新失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 
@@ -111,6 +125,7 @@ public class GroupService extends BaseHibernateDao implements GroupServiceImpl {
 			result = (List<String>) this.retrieveObjsLP(hql, groupId);
 		} catch (OPException e) {
 			logger.error("查询失败", e);
+			throw new ApplicationException(e);
 		}
 
 		return result;
@@ -137,6 +152,7 @@ public class GroupService extends BaseHibernateDao implements GroupServiceImpl {
 			this.saveObj(objs);
 		} catch (OPException e) {
 			logger.error("保存失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 
@@ -150,6 +166,7 @@ public class GroupService extends BaseHibernateDao implements GroupServiceImpl {
 			result = (List<String>) this.retrieveObjsLP(hql, userId);
 		} catch (OPException e) {
 			logger.error("查询失败", e);
+			throw new ApplicationException(e);
 		}
 
 		return result;
@@ -176,6 +193,7 @@ public class GroupService extends BaseHibernateDao implements GroupServiceImpl {
 			this.saveObjs(objs);
 		} catch (OPException e) {
 			logger.error("保存失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 }

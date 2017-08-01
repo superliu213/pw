@@ -8,7 +8,7 @@ import com.springapp.mvc.entiy.SysUser;
 
 public interface UserServiceImpl extends BusinessService {
 	
-	PageHolder<SysUser> getUsers(Integer page, Integer pageSize);
+	PageHolder<SysUser> getUsers(Integer page, Integer pageSize, String userId, String userName, String ifValid);
 
 	List<SysUser> getAllUsers();
 
@@ -21,5 +21,9 @@ public interface UserServiceImpl extends BusinessService {
 	void initData();
 	
 	Boolean checkLoginUser(String userId, String password);
+
+	void passwordreset(Long id);
+
+	String updatepassword(Long id, String oldPassword, String newPassword);
 
 }

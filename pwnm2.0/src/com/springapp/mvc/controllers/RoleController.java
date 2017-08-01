@@ -41,7 +41,8 @@ public class RoleController {
 
 	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public String list(HttpServletResponse response, HttpServletRequest request, Integer page, Integer pageSize) {
+	public String list(HttpServletResponse response, HttpServletRequest request, Integer page, Integer pageSize,
+			String roleId, String roleDesc) {
 
 		String result = "";
 		String message = "";
@@ -56,7 +57,7 @@ public class RoleController {
 		}
 
 		try {
-			PageHolder<SysRole> roles = roleService.getRoles(page, pageSize);
+			PageHolder<SysRole> roles = roleService.getRoles(page, pageSize, roleId, roleDesc);
 			dto.setTotalItem(roles.getTotalCount());
 			dto.setData(roles.getDatas());
 		} catch (Exception e) {

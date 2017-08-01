@@ -20,7 +20,7 @@ public class RoleService extends BaseHibernateDao implements RoleServiceImpl {
 	Log logger = LogFactory.getLog(getClass());
 
 	@Override
-	public PageHolder<SysRole> getRoles(Integer page, Integer pageSize) {
+	public PageHolder<SysRole> getRoles(Integer page, Integer pageSize, String roleId, String roleDesc) {
 		int totalCount = 0;
 
 		List<SysRole> datas = new ArrayList<>();
@@ -88,9 +88,6 @@ public class RoleService extends BaseHibernateDao implements RoleServiceImpl {
 
 		DbCollection.dbRole.add(role1);
 		DbCollection.dbRole.add(role2);
-
-		addRole(role1);
-		addRole(role2);
 
 		DbCollection.roleFunction.put("0", new String[] { "1", "2", "3", "4", "5" });
 		DbCollection.roleFunction.put("1", new String[] { "2" });

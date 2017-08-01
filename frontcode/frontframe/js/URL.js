@@ -14,9 +14,11 @@ var interUrl = {
     remove: "user/remove",
     init: "user/init",
     role: "user/role",
-    userrole: "user/userrole	",
+    userrole: "user/userrole",
     group: "user/group",
-    usergroup: "user/usergroup"
+    usergroup: "user/usergroup",
+    passwordreset : "user/passwordreset",
+    updatepassword : "user/updatepassword"
   },
   role: {
     list: "role/list",

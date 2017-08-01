@@ -1,3 +1,21 @@
+//validator addMethod start
+$.validator.addMethod("commonString",function(value,element,params){
+ var commonString = /^-?\w{1,20}$/;
+ return (commonString.test(value));
+ },"请输入数字、英文字母或者下划线")
+//validator addMethod end
+
+//handle undefined start
+var checkNullValue = function(value){
+	if(typeof(value) == "undefined"){
+		return "";
+	}
+
+	return value;
+}
+//handle undefined end
+
+
 //AuthorizationInterceptor start
 var authorityInterceptorJump = function(res){
 	var o;
@@ -181,6 +199,21 @@ var businessTypeFormatter = function(value, row) {
 		result = '充值';
 	} else if (value == '4') {
 		result = '更新';
+	} else if (value == '5') {
+		result = '行政罚款';
+	} else{
+		result = '--';
+	}
+	return result;
+}
+
+var functionTypeFormatter = function(value, row) {
+	if (value == '1') {
+		result = '一级菜单';
+	} else if (value == '2') {
+		result = '二级菜单';
+	} else if (value == '3') {
+		result = '按钮';
 	} else{
 		result = '--';
 	}
@@ -292,10 +325,7 @@ var fnExportTable = function() {
 }
 
 var fnResetForm = function() {
-	BootstrapDialog.show({
-		title : '提示信息',
-		message : '操作成功'
-	});
+	$("#" + form)[0].reset();
 }
 
 var fnAddTable = function() {

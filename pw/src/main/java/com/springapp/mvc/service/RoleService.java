@@ -2,6 +2,9 @@ package com.springapp.mvc.service;
 
 import java.util.List;
 
+import com.springapp.common.op.LikeMatchMode;
+import com.springapp.common.op.SqlRestrictions;
+import com.springapp.exception.ApplicationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
@@ -19,12 +22,14 @@ public class RoleService extends BaseHibernateDao implements RoleServiceImpl {
 	Log logger = LogFactory.getLog(getClass());
 
 	@Override
-	public PageHolder<SysRole> getRoles(Integer page, Integer pageSize) {
+	public PageHolder<SysRole> getRoles(Integer page, Integer pageSize, String roleId, String roleDesc) {
 		int totalCount = 0;
 
 		List<SysRole> datas = null;
 
-		String hql = "from SysRole t";
+		String hql = "from SysRole t where 1=1 ";
+		hql += SqlRestrictions.eq("t.roleId", roleId);
+		hql += SqlRestrictions.like("t.roleDesc", roleDesc, LikeMatchMode.BOTHADD);
 
 		try {
 			datas = (List<SysRole>) this.query(hql, page - 1, pageSize);
@@ -36,6 +41,7 @@ public class RoleService extends BaseHibernateDao implements RoleServiceImpl {
 
 		} catch (OPException e) {
 			logger.error("查询失败", e);
+			throw new ApplicationException(e);
 		}
 
 		return new PageHolder<SysRole>(page, pageSize, totalCount, datas);
@@ -49,6 +55,7 @@ public class RoleService extends BaseHibernateDao implements RoleServiceImpl {
 			result = (List<SysRole>) this.retrieveObjs(hql);
 		} catch (OPException e) {
 			logger.error("查询失败", e);
+			throw new ApplicationException(e);
 		}
 		return result;
 	}
@@ -60,6 +67,7 @@ public class RoleService extends BaseHibernateDao implements RoleServiceImpl {
 			this.execHqlUpdateLP(hql, id);
 		} catch (OPException e) {
 			logger.error("删除失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 
@@ -69,6 +77,7 @@ public class RoleService extends BaseHibernateDao implements RoleServiceImpl {
 			this.saveObj(role);
 		} catch (OPException e) {
 			logger.error("添加失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 
@@ -98,6 +107,7 @@ public class RoleService extends BaseHibernateDao implements RoleServiceImpl {
 			this.updateObj(role);
 		} catch (OPException e) {
 			logger.error("更新失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 
@@ -111,6 +121,7 @@ public class RoleService extends BaseHibernateDao implements RoleServiceImpl {
 			result = (List<String>) this.retrieveObjsLP(hql, userId);
 		} catch (OPException e) {
 			logger.error("查询失败", e);
+			throw new ApplicationException(e);
 		}
 
 		return result;
@@ -137,6 +148,7 @@ public class RoleService extends BaseHibernateDao implements RoleServiceImpl {
 			this.saveObjs(objs);
 		} catch (OPException e) {
 			logger.error("保存失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 
@@ -150,6 +162,7 @@ public class RoleService extends BaseHibernateDao implements RoleServiceImpl {
 			result = (List<String>) this.retrieveObjsLP(hql, roleId);
 		} catch (OPException e) {
 			logger.error("查询失败", e);
+			throw new ApplicationException(e);
 		}
 
 		return result;
@@ -176,6 +189,7 @@ public class RoleService extends BaseHibernateDao implements RoleServiceImpl {
 			this.saveObjs(objs);
 		} catch (OPException e) {
 			logger.error("保存失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 

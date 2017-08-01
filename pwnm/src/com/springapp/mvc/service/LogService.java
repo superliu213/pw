@@ -4,6 +4,9 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
+import com.springapp.common.op.SqlRestrictions;
+import com.springapp.common.util.DateTimeUtil;
+import com.springapp.exception.ApplicationException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
@@ -37,12 +40,19 @@ public class LogService extends BaseHibernateDao implements LogServiceImpl {
 	}
 
 	@Override
-	public PageHolder<SysLog> getLogs(Integer page, Integer pageSize) {
+	public PageHolder<SysLog> getLogs(Integer page, Integer pageSize, String startTime, String endTime,
+			String operatorId, String logType, String logLevel) {
 		int totalCount = 0;
 
 		List<SysLog> datas = null;
 
-		String hql = "from SysLog t";
+		String hql = "from SysLog t where 1=1 ";
+		hql += SqlRestrictions.between("t.occurTime", DateTimeUtil.stringToDate(startTime, "yyyy-mm-dd hh24:mi:ss"),
+				DateTimeUtil.stringToDate(endTime, "yyyy-mm-dd hh24:mi:ss"));
+		hql += SqlRestrictions.eq("t.operatorId", operatorId);
+		hql += SqlRestrictions.eq("t.logType", logType);
+		hql += SqlRestrictions.eq("t.logLevel", logLevel);
+		hql += " order by occurTime desc";
 
 		try {
 			datas = (List<SysLog>) this.query(hql, page - 1, pageSize);
@@ -54,6 +64,7 @@ public class LogService extends BaseHibernateDao implements LogServiceImpl {
 
 		} catch (OPException e) {
 			logger.error("查询失败", e);
+			throw new ApplicationException(e);
 		}
 
 		return new PageHolder<SysLog>(page, pageSize, totalCount, datas);
@@ -67,6 +78,7 @@ public class LogService extends BaseHibernateDao implements LogServiceImpl {
 			result = (List<SysLog>) this.retrieveObj(hql);
 		} catch (OPException e) {
 			logger.error("查询失败", e);
+			throw new ApplicationException(e);
 		}
 		return result;
 	}
@@ -76,6 +88,7 @@ public class LogService extends BaseHibernateDao implements LogServiceImpl {
 			this.saveObj(sysLog);
 		} catch (OPException e) {
 			logger.error("添加失败", e);
+			throw new ApplicationException(e);
 		}
 	}
 

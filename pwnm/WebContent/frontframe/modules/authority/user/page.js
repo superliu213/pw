@@ -5,42 +5,32 @@ var saveTreeUrl;
 var loadTreeUrl;
 
 var fnUpdateTable = function() {
-  var selections = $("#pw_table").bootstrapTable('getSelections');
-  if (selections.length == 0) {
-    BootstrapDialog.show({
-      title: '提示信息',
-      message: '未选择编辑行'
-    });
+  if (!fnSelectOne()) {
     return;
   }
 
-  if (selections.length > 1) {
-    BootstrapDialog.show({
-      title: '提示信息',
-      message: '只能编辑一行'
-    });
-    return;
-  }
+  var selections = $("#pw_table").bootstrapTable('getSelections');
 
   $('#myModal')
     .on(
       'show.bs.modal',
       function() {
-        $("input[name ='flag']")[0].value = "update";
-        $("input[name ='id']")[0].value = selections[0].id;
-        $("input[name ='userId']")[0].value = selections[0].userId;
-        $("input[name ='userName']")[0].value = selections[0].userName;
-        $("input[name ='userTelephone']")[0].value = selections[0].userTelephone;
-        $("select[name ='ifValid']")[0].value = selections[0].ifValid;
-        $("input[name ='userEmail']")[0].value = selections[0].userEmail;
-        $("input[name ='userBirthday']")[0].value = laydate
+    	$("#dialogForm")[0].reset();
+        $("#myModal input[name ='flag']")[0].value = "update";
+        $("#myModal input[name ='id']")[0].value = selections[0].id;
+        $("#myModal input[name ='userId']")[0].value = selections[0].userId;
+        $("#myModal input[name ='userName']")[0].value = selections[0].userName;
+        $("#myModal input[name ='userTelephone']")[0].value = checkNullValue(selections[0].userTelephone);
+        $("#myModal select[name ='ifValid']")[0].value = selections[0].ifValid;
+        $("#myModal input[name ='userEmail']")[0].value = checkNullValue(selections[0].userEmail);
+        $("#myModal input[name ='userBirthday']")[0].value = laydate
           .now(selections[0].userBirthday);
-        $("input[name ='userIdCard']")[0].value = selections[0].userIdCard;
-        $("input[name ='userValidityPeriod']")[0].value = laydate
+        $("#myModal input[name ='userIdCard']")[0].value = checkNullValue(selections[0].userIdCard);
+        $("#myModal input[name ='userValidityPeriod']")[0].value = laydate
           .now(selections[0].userValidityPeriod);
-        $("input[name ='pwValidityPeriod']")[0].value = laydate
+        $("#myModal input[name ='pwValidityPeriod']")[0].value = laydate
           .now(selections[0].pwValidityPeriod);
-        $("input[name ='remark']")[0].value = selections[0].remark;
+        $("#myModal input[name ='remark']")[0].value = checkNullValue(selections[0].remark);
       });
 
   $('#myModal').modal('show');
@@ -66,7 +56,6 @@ var fnRemoveTable = function() {
       if (authorityInterceptorJump(res)) {
         return;
       }
-      //console.log("success: ", res);
 
       BootstrapDialog.show({
         title: ' 提示信息',
@@ -80,7 +69,6 @@ var fnRemoveTable = function() {
       });
     },
     error: function(e) {
-      //console.log("ERROR: ", e);
       BootstrapDialog.show({
         title: '错误信息',
         message: 'ajax请求error'
@@ -106,15 +94,94 @@ var fnPasswordReset = function() {
       label: '确认',
       action: function(dialog) {
         dialog.close();
-        setTimeout(function() {
-          BootstrapDialog.show({
-            title: '提示信息',
-            message: '密码重置成功!'
-          });
-        }, 1000);
+        var selections = $("#pw_table").bootstrapTable('getSelections');
+        $.ajax({
+          url: interUrl.basic + interUrl.user.passwordreset,
+          data: {
+            "id": selections[0].id
+          },
+          headers: {
+            "AUTH_ID": sessionStorage.getItem('authId')
+          },
+          type: "POST",
+          success: function(res) {
+            if (authorityInterceptorJump(res)) {
+              return;
+            }
+            BootstrapDialog.show({
+              title: ' 提示信息',
+              message: res.message
+            });
+          },
+          error: function(e) {
+            BootstrapDialog.show({
+              title: '错误信息',
+              message: 'ajax请求error'
+            });
+          }
+        });
       }
     }]
   });
+}
+
+
+var fnUpdatePassword = function() {
+  if (!fnSelectOne()) {
+    return;
+  }
+
+  var selections = $("#pw_table").bootstrapTable('getSelections');
+
+  $('#passwordModal')
+    .on(
+      'show.bs.modal',
+      function() {
+        $('#passwordDialogForm')[0].reset();
+        $("#passwordModal input[name ='id']")[0].value = selections[0].id;
+        $("#passwordModal input[name ='userId']")[0].value = selections[0].userId;
+      });
+  $('#passwordModal').modal('show');
+}
+
+var fnSavePasswordDialog = function() {
+  var saveUrlTemp = "user";
+  $("#passwordDialogForm").validate();
+
+  if ($("#passwordDialogForm").values().oldPassword === $("#passwordDialogForm").values().newPassword) {
+    BootstrapDialog.show({
+      title: ' 提示信息',
+      message: '新旧密码一致，不允许修改，请重新输入'
+    });
+    return
+  }
+
+  if ($("#passwordDialogForm").valid()) {
+    $.ajax({
+      url: interUrl.basic + interUrl.user.updatepassword,
+      type: "POST",
+      data: $("#passwordDialogForm").values(),
+      headers: {
+        "AUTH_ID": sessionStorage.getItem('authId')
+      },
+      success: function(res) {
+        if (authorityInterceptorJump(res)) {
+          return;
+        }
+        $('#passwordModal').modal('hide')
+        BootstrapDialog.show({
+          title: ' 提示信息',
+          message: res.message
+        });
+      },
+      error: function(e) {
+        BootstrapDialog.show({
+          title: '错误信息',
+          message: 'ajax请求error'
+        });
+      }
+    });
+  }
 }
 
 var fnSaveDialog = function() {
@@ -133,7 +200,6 @@ var fnSaveDialog = function() {
         if (authorityInterceptorJump(res)) {
           return;
         }
-        //console.log("success: ", res);
 
         BootstrapDialog.show({
           title: ' 提示信息',
@@ -147,7 +213,6 @@ var fnSaveDialog = function() {
         });
       },
       error: function(e) {
-        //console.log("ERROR: ", e);
         BootstrapDialog.show({
           title: '错误信息',
           message: 'ajax请求error'
@@ -223,7 +288,6 @@ var fnSaveTree = function() {
       if (authorityInterceptorJump(res)) {
         return;
       }
-      //console.log("success:", res);
       BootstrapDialog.show({
         title: '提示信息',
         message: '保存成功'
@@ -233,7 +297,6 @@ var fnSaveTree = function() {
       }, loadTreeUrl)
     },
     error: function(e) {
-      //console.log("error:", e);
       BootstrapDialog.show({
         title: '错误信息',
         message: 'ajax请求error'
@@ -247,8 +310,8 @@ $(document).ready(function() {
   $("#update_table").on("click", fnUpdateTable);
   $("#remove_table").on("click", fnRemoveTable);
   $("#password_reset").on("click", fnPasswordReset);
-  $("#import_table").on("click", fnImportTable);
-  $("#export_table").on("click", fnExportTable);
+  $("#update_password").on("click", fnUpdatePassword);
+  $("#save_password_dialog").on("click", fnSavePasswordDialog);
   $("#query_table").on("click", fnQueryTable);
   $("#save_dialog").on("click", fnSaveDialog);
   $("#reset_form").on("click", fnResetForm);

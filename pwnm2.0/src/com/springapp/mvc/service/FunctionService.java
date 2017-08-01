@@ -18,7 +18,8 @@ public class FunctionService extends BaseHibernateDao implements FunctionService
 	Log logger = LogFactory.getLog(getClass());
 
 	@Override
-	public PageHolder<SysFunction> getFunctions(Integer page, Integer pageSize) {
+	public PageHolder<SysFunction> getFunctions(Integer page, Integer pageSize, String functionId, String functionName,
+			String functionType, String functionParentId) {
 		int totalCount = 0;
 
 		List<SysFunction> datas = new ArrayList<>();

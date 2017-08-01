@@ -31,12 +31,8 @@ public class LogService extends BaseHibernateDao implements LogServiceImpl {
 	}
 
 	@Override
-	public PageHolder<SysLog> getLogs(Integer page, Integer pageSize) {
-		// if (dbFunction == null) {
-		// initData();
-		// }
-		//
-		// return dbFunction;
+	public PageHolder<SysLog> getLogs(Integer page, Integer pageSize, String startTime, String endTime,
+			String operatorId, String logType, String logLevel) {
 		int totalCount = 0;
 
 		List<SysLog> datas = new ArrayList<>();

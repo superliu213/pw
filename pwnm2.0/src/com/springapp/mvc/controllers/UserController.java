@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.springapp.common.util.MD5Util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ import com.springapp.mvc.vo.SessionInfo;
 import com.springapp.mvc.vo.State;
 import com.springapp.mvc.vo.TreeCode;
 import com.springapp.mvc.vo.TreeStyle;
+import smartbi.util.MD5HashUtil;
 
 @Controller
 @RequestMapping("/api/user")
@@ -50,9 +52,8 @@ public class UserController {
 
 	@ResponseBody
 	@RequestMapping(value = "/list", method = RequestMethod.POST)
-	public String list(HttpServletResponse response, HttpServletRequest request, Integer page, Integer pageSize) {
-		
-		SessionInfo si = (SessionInfo) request.getSession().getAttribute(ApplicationGlobalNames.SESSION_KEY_USER);
+	public String list(HttpServletResponse response, HttpServletRequest request, Integer page, Integer pageSize,
+			String userId, String userName, String ifValid) {
 
 		String result = "";
 		String message = "查询成功";
@@ -67,7 +68,7 @@ public class UserController {
 		}
 
 		try {
-			PageHolder<SysUser> users = userService.getUsers(page, pageSize);
+			PageHolder<SysUser> users = userService.getUsers(page, pageSize, userId, userName, ifValid);
 			dto.setTotalItem(users.getTotalCount());
 			dto.setData(users.getDatas());
 		} catch (Exception e) {
@@ -101,7 +102,7 @@ public class UserController {
 		user.setUserId(userId);
 		user.setUserIdCard(userIdCard);
 		user.setUserName(userName);
-		user.setUserPassWord(userId);
+		user.setUserPassWord(MD5Util.MD5(ApplicationGlobalNames.RESET_PASSWD));
 		user.setUserTelephone(userTelephone);
 		user.setUserValidityPeriod(DateTimeUtil.parseStringToDate(userValidityPeriod, pattern));
 
@@ -139,7 +140,7 @@ public class UserController {
 		SysUser user = new SysUser();
 		user.setId(Long.valueOf(id));
 		user.setIfValid(ifValid);
-		String pattern = "YYYY-MM-DD";
+		String pattern = "yyyy-MM-dd";
 		user.setPwValidityPeriod(DateTimeUtil.parseStringToDate(pwValidityPeriod, pattern));
 		user.setRemark(remark);
 		user.setUserBirthday(DateTimeUtil.parseStringToDate(userBirthday, pattern));
@@ -435,6 +436,61 @@ public class UserController {
 		}
 
 		return dto;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/passwordreset", method = RequestMethod.POST)
+	public String passwordreset(HttpServletResponse response, HttpServletRequest request, String id) {
+		String result = null;
+		String message = "重置成功";
+		DataDto dto = new DataDto();
+
+		try {
+			if (userService == null) {
+				userService = (UserServiceImpl) Application.getService(UserServiceImpl.class);
+			}
+		} catch (Exception e) {
+			logger.error("获取UserServiceImpl失败");
+		}
+
+		try {
+			userService.passwordreset(Long.valueOf(id));
+		} catch (Exception e) {
+			message = "重置失败";
+		}
+
+		dto.setMessage(message);
+		result = JSON.toJSONString(dto);
+
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping(value = "/updatepassword", method = RequestMethod.POST)
+	public String updatepassword(HttpServletResponse response, HttpServletRequest request, String id,
+			String oldPassword, String newPassword) {
+		String result = null;
+		String message = "更新成功";
+		DataDto dto = new DataDto();
+
+		try {
+			if (userService == null) {
+				userService = (UserServiceImpl) Application.getService(UserServiceImpl.class);
+			}
+		} catch (Exception e) {
+			logger.error("获取UserServiceImpl失败");
+		}
+
+		try {
+			message = userService.updatepassword(Long.valueOf(id), oldPassword, newPassword);
+		} catch (Exception e) {
+			message = "更新失败";
+		}
+
+		dto.setMessage(message);
+		result = JSON.toJSONString(dto);
+
+		return result;
 	}
 
 }

@@ -8,7 +8,8 @@ import com.springapp.mvc.entiy.SysFunction;
 
 public interface FunctionServiceImpl extends BusinessService {
 	
-	PageHolder<SysFunction> getFunctions(Integer page, Integer pageSize);
+	PageHolder<SysFunction> getFunctions(Integer page, Integer pageSize, String functionId, String functionName,
+			String functionType, String functionParentId);
 
 	List<SysFunction> getAllFunctions();
 	

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.springapp.common.application.ApplicationGlobalNames;
+import com.springapp.common.util.MD5Util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
@@ -24,7 +26,7 @@ public class UserService extends BaseHibernateDao implements UserServiceImpl {
 		DbCollection.dbUser = new ArrayList<>();
 
 		Date date = new Date();
-		SysUser user1 = new SysUser(1L, "admin", "admin", "超级管理员", (short) 1);
+		SysUser user1 = new SysUser(1L, "admin", "21232f297a57a5a743894a0e4a801fc3", "超级管理员", (short) 1);
 		Date pwValidityPeriod = date;
 		String remark = "1";
 		Date userBirthday = date;
@@ -40,7 +42,7 @@ public class UserService extends BaseHibernateDao implements UserServiceImpl {
 		user1.setUserTelephone(userTelephone);
 		user1.setUserValidityPeriod(userValidityPeriod);
 
-		SysUser user2 = new SysUser(2L, "1", "1", "2", (short) 1);
+		SysUser user2 = new SysUser(2L, "1", "c4ca4238a0b923820dcc509a6f75849b", "2", (short) 1);
 		Date pwValidityPeriod2 = date;
 		String remark2 = "1";
 		Date userBirthday2 = date;
@@ -60,7 +62,8 @@ public class UserService extends BaseHibernateDao implements UserServiceImpl {
 	}
 
 	@Override
-	public PageHolder<SysUser> getUsers(Integer page, Integer pageSize) {
+	public PageHolder<SysUser> getUsers(Integer page, Integer pageSize, String userId, String userName,
+			String ifValid) {
 		int totalCount = 0;
 
 		List<SysUser> datas = new ArrayList<>();
@@ -139,12 +142,42 @@ public class UserService extends BaseHibernateDao implements UserServiceImpl {
 		}
 
 		for (SysUser temp : DbCollection.dbUser) {
-			if (userId.equals(temp.getUserId()) && password.equals(temp.getUserPassWord())) {
+			if (userId.equals(temp.getUserId()) && MD5Util.MD5(password).equals(temp.getUserPassWord())) {
 				result = true;
 				break;
 			}
 		}
 
+		return result;
+	}
+
+	@Override
+	public void passwordreset(Long id) {
+		if (DbCollection.dbUser == null) {
+			initData();
+		}
+
+		for (SysUser temp : DbCollection.dbUser) {
+			if (id.equals(temp.getId())) {
+				temp.setUserPassWord(MD5Util.MD5(ApplicationGlobalNames.RESET_PASSWD));
+				break;
+			}
+		}
+	}
+
+	@Override
+	public String updatepassword(Long id, String oldPassword, String newPassword) {
+		String result = "更新成功";
+		if (DbCollection.dbUser == null) {
+			initData();
+		}
+
+		for (SysUser temp : DbCollection.dbUser) {
+			if (id.equals(temp.getId())) {
+				temp.setUserPassWord(MD5Util.MD5(newPassword));
+				break;
+			}
+		}
 		return result;
 	}
 }
