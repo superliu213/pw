@@ -45,7 +45,7 @@ public class SmartbiSessionMonitorServlet extends HttpServlet {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param request
 	 *            请求
 	 * @param response
@@ -86,7 +86,7 @@ public class SmartbiSessionMonitorServlet extends HttpServlet {
 			logger.error(e.getMessage());
 			isOpen = false;
 		}
-		
+
 		if (isOpen) {
 			String jsonString = JSONUtil.getSuccessJSONString("成功");
 			response.getWriter().println(jsonString);;
