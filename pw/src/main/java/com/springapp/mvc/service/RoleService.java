@@ -172,7 +172,7 @@ public class RoleService extends BaseHibernateDao implements RoleServiceImpl {
 	public void roleFunction(String roleId, String[] ids) {
 		String hql = "delete from SysRoleFunction t where t.roleId = ?";
 		try {
-			this.execSqlUpdateLP(hql, roleId);
+			this.execHqlUpdateLP(hql, roleId);
 		} catch (OPException e) {
 			logger.error("清理角色菜单对应表失败", e);
 		}

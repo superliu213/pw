@@ -7,7 +7,7 @@ package com.springapp.common.application;
 public class ApplicationGlobalNames {
 
 	public static String DEFAULT_ENCODING = "utf-8";
-	public static String DB_TYPE = "mysql";
+	public static String DB_TYPE = "oracle";
 
 	public static int PAGE_SIZE = 10;
 	

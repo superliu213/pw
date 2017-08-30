@@ -365,7 +365,6 @@ public class SqlRestrictions {
 	 * @param fieldName 字段名称
 	 * @param loMatchDate "yyyy-MM-dd" 小的比较对象
 	 * @param hiMatchDate "yyyy-MM-dd" 大的比较对象
-	 * @param flag false为<=,true为<
 	 * @return 部分sql
 	 */
 	public static String betweenDate(String fieldName, String loMatchDate, String hiMatchDate) {

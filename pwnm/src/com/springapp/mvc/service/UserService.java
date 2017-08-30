@@ -26,7 +26,7 @@ public class UserService extends BaseHibernateDao implements UserServiceImpl {
 
 	public void initData() {
 		Date date = new Date();
-		SysUser user1 = new SysUser(1L, "admin", "admin", "超级管理员", (short) 1);
+		SysUser user1 = new SysUser(1L, "admin", "21232f297a57a5a743894a0e4a801fc3", "超级管理员", (short) 1);//密码admin
 		Date pwValidityPeriod = date;
 		String remark = "1";
 		Date userBirthday = date;
@@ -42,7 +42,7 @@ public class UserService extends BaseHibernateDao implements UserServiceImpl {
 		user1.setUserTelephone(userTelephone);
 		user1.setUserValidityPeriod(userValidityPeriod);
 
-		SysUser user2 = new SysUser(2L, "1", "1", "2", (short) 1);
+		SysUser user2 = new SysUser(2L, "1", "c4ca4238a0b923820dcc509a6f75849b", "2", (short) 1);//密码1
 		Date pwValidityPeriod2 = date;
 		String remark2 = "1";
 		Date userBirthday2 = date;

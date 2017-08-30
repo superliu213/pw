@@ -4,38 +4,6 @@ var form = "userForm";
 var saveTreeUrl;
 var loadTreeUrl;
 
-var fnUpdateTable = function() {
-  if (!fnSelectOne()) {
-    return;
-  }
-
-  var selections = $("#pw_table").bootstrapTable('getSelections');
-
-  $('#myModal')
-    .on(
-      'show.bs.modal',
-      function() {
-    	$("#dialogForm")[0].reset();
-        $("#myModal input[name ='flag']")[0].value = "update";
-        $("#myModal input[name ='id']")[0].value = selections[0].id;
-        $("#myModal input[name ='userId']")[0].value = selections[0].userId;
-        $("#myModal input[name ='userName']")[0].value = selections[0].userName;
-        $("#myModal input[name ='userTelephone']")[0].value = checkNullValue(selections[0].userTelephone);
-        $("#myModal select[name ='ifValid']")[0].value = selections[0].ifValid;
-        $("#myModal input[name ='userEmail']")[0].value = checkNullValue(selections[0].userEmail);
-        $("#myModal input[name ='userBirthday']")[0].value = laydate
-          .now(selections[0].userBirthday);
-        $("#myModal input[name ='userIdCard']")[0].value = checkNullValue(selections[0].userIdCard);
-        $("#myModal input[name ='userValidityPeriod']")[0].value = laydate
-          .now(selections[0].userValidityPeriod);
-        $("#myModal input[name ='pwValidityPeriod']")[0].value = laydate
-          .now(selections[0].pwValidityPeriod);
-        $("#myModal input[name ='remark']")[0].value = checkNullValue(selections[0].remark);
-      });
-
-  $('#myModal').modal('show');
-}
-
 var fnRemoveTable = function() {
   if (!fnSelectOne()) {
     return;
@@ -43,38 +11,18 @@ var fnRemoveTable = function() {
 
   var selections = $("#pw_table").bootstrapTable('getSelections');
 
-  $.ajax({
-    url: interUrl.basic + interUrl.user.remove,
-    type: "POST",
-    data: {
+  commonAjax(interUrl.basic + interUrl.user.remove,
+    "POST", {
       "id": selections[0].id
     },
-    headers: {
-      "AUTH_ID": sessionStorage.getItem('authId')
-    },
-    success: function(res) {
-      if (authorityInterceptorJump(res)) {
-        return;
-      }
-
-      BootstrapDialog.show({
-        title: ' 提示信息',
-        message: res.message
-      });
-
+    function(res) {
       $('#myModal').modal('hide')
       $("#pw_table").bootstrapTable("refresh", {
         url: "...",
         query: res
       });
-    },
-    error: function(e) {
-      BootstrapDialog.show({
-        title: '错误信息',
-        message: 'ajax请求error'
-      });
     }
-  });
+  )
 }
 
 var fnPasswordReset = function() {
@@ -95,31 +43,13 @@ var fnPasswordReset = function() {
       action: function(dialog) {
         dialog.close();
         var selections = $("#pw_table").bootstrapTable('getSelections');
-        $.ajax({
-          url: interUrl.basic + interUrl.user.passwordreset,
-          data: {
+
+        commonAjax(
+          interUrl.basic + interUrl.user.passwordreset,
+          "POST", {
             "id": selections[0].id
-          },
-          headers: {
-            "AUTH_ID": sessionStorage.getItem('authId')
-          },
-          type: "POST",
-          success: function(res) {
-            if (authorityInterceptorJump(res)) {
-              return;
-            }
-            BootstrapDialog.show({
-              title: ' 提示信息',
-              message: res.message
-            });
-          },
-          error: function(e) {
-            BootstrapDialog.show({
-              title: '错误信息',
-              message: 'ajax请求error'
-            });
           }
-        });
+        )
       }
     }]
   });
@@ -157,30 +87,13 @@ var fnSavePasswordDialog = function() {
   }
 
   if ($("#passwordDialogForm").valid()) {
-    $.ajax({
-      url: interUrl.basic + interUrl.user.updatepassword,
-      type: "POST",
-      data: $("#passwordDialogForm").values(),
-      headers: {
-        "AUTH_ID": sessionStorage.getItem('authId')
-      },
-      success: function(res) {
-        if (authorityInterceptorJump(res)) {
-          return;
-        }
+    commonAjax(interUrl.basic + interUrl.user.updatepassword,
+      "POST",
+      $("#passwordDialogForm").values(),
+      function() {
         $('#passwordModal').modal('hide')
-        BootstrapDialog.show({
-          title: ' 提示信息',
-          message: res.message
-        });
-      },
-      error: function(e) {
-        BootstrapDialog.show({
-          title: '错误信息',
-          message: 'ajax请求error'
-        });
       }
-    });
+    )
   }
 }
 
@@ -188,37 +101,17 @@ var fnSaveDialog = function() {
   var saveUrlTemp = "user";
   $("#dialogForm").validate();
   if ($("#dialogForm").valid()) {
-    $.ajax({
-      url: interUrl.basic + saveUrlTemp + "/" +
-        $("input[name ='flag']")[0].value,
-      type: "POST",
-      data: $("#dialogForm").values(),
-      headers: {
-        "AUTH_ID": sessionStorage.getItem('authId')
-      },
-      success: function(res) {
-        if (authorityInterceptorJump(res)) {
-          return;
-        }
-
-        BootstrapDialog.show({
-          title: ' 提示信息',
-          message: res.message
-        });
-
+    commonAjax(interUrl.basic + saveUrlTemp + "/" + $("input[name ='flag']")[0].value,
+      "POST",
+      $("#dialogForm").values(),
+      function(res) {
         $('#myModal').modal('hide')
         $("#pw_table").bootstrapTable("refresh", {
           url: "...",
           query: res
         });
-      },
-      error: function(e) {
-        BootstrapDialog.show({
-          title: '错误信息',
-          message: 'ajax请求error'
-        });
       }
-    });
+    )
   }
 }
 
@@ -277,32 +170,11 @@ var fnSaveTree = function() {
     "idstr": ids.join()
   };
 
-  $.ajax({
-    url: saveTreeUrl,
-    type: "POST",
-    data: params,
-    headers: {
-      "AUTH_ID": sessionStorage.getItem('authId')
-    },
-    success: function(res) {
-      if (authorityInterceptorJump(res)) {
-        return;
-      }
-      BootstrapDialog.show({
-        title: '提示信息',
-        message: '保存成功'
-      });
-      loadTree({
-        "userId": userId,
-      }, loadTreeUrl)
-    },
-    error: function(e) {
-      BootstrapDialog.show({
-        title: '错误信息',
-        message: 'ajax请求error'
-      });
-    }
-  });
+  commonAjax(saveTreeUrl, "POST", params, function() {
+    loadTree({
+      "userId": userId,
+    }, loadTreeUrl)
+  })
 }
 
 $(document).ready(function() {

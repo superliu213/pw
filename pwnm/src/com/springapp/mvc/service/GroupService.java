@@ -149,7 +149,7 @@ public class GroupService extends BaseHibernateDao implements GroupServiceImpl {
 		}
 
 		try {
-			this.saveObj(objs);
+			this.saveObjs(objs);
 		} catch (OPException e) {
 			logger.error("保存失败", e);
 			throw new ApplicationException(e);
