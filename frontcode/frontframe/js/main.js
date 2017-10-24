@@ -201,7 +201,6 @@ $(function() {
 	              "AUTH_ID": sessionStorage.getItem('authId')
 	        },
 			success: function(res) {
-				console.log("success: ", res);
 				var o;
 				if (typeof res === "string") {
 						o = JSON.parse(res);

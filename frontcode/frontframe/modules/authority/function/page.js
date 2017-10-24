@@ -3,47 +3,47 @@ var resetDataUrl = interUrl.basic + interUrl.function.init;
 var form = "functionForm";
 
 var fnUpdateTable = function() {
-  var selections = $("#pw_table").bootstrapTable('getSelections');
-  if (selections.length == 0) {
-    BootstrapDialog.show({
-      title: '提示信息',
-      message: '未选择编辑行'
-    });
-    return;
-  }
+	  if (!fnSelectOne()) {
+	    return;
+	  }
 
-  if (selections.length > 1) {
-    BootstrapDialog.show({
-      title: '提示信息',
-      message: '只能编辑一行'
-    });
-    return;
-  }
+	  var selections = $("#pw_table").bootstrapTable('getSelections');
 
-  $('#myModal').on('show.bs.modal', function() {
-    $("input[name ='flag']")[0].value = "update";
-    $("input[name ='id']")[0].value = selections[0].id;
-    $("input[name ='functionId']")[0].value = selections[0].functionId;
-    $("input[name ='functionName']")[0].value = selections[0].functionName;
-    $("input[name ='functionType']")[0].value = selections[0].functionType;
-    $("input[name ='functionParentId']")[0].value = selections[0].functionParentId;
-    $("input[name ='functionUrl']")[0].value = selections[0].functionUrl;
-    $("input[name ='orderNo']")[0].value = selections[0].orderNo;
-    $("input[name ='functionLogo']")[0].value = selections[0].functionLogo;
-    $("input[name ='buttonPosition']")[0].value = selections[0].buttonPosition;
-    $("input[name ='remark']")[0].value = selections[0].remark;
-  });
+	  $('#myModal').on('show.bs.modal', function() {
+	    $("#dialogForm")[0].reset();
+	    $("#myModal input[name ='flag']")[0].value = "update";
+	    $("#myModal input[name ='id']")[0].value = selections[0].id;
+	    $("#myModal input[name ='functionId']")[0].value = selections[0].functionId;
+	    $("#myModal input[name ='functionName']")[0].value = selections[0].functionName;
+	    $("#myModal select[name ='functionType']")[0].value = selections[0].functionType;
+	    $("#myModal input[name ='functionParentId']")[0].value = checkNullValue(selections[0].functionParentId);
+	    $("#myModal input[name ='functionUrl']")[0].value = checkNullValue(selections[0].functionUrl);
+	    $("#myModal input[name ='orderNo']")[0].value = selections[0].orderNo;
+	    $("#myModal input[name ='functionLogo']")[0].value = checkNullValue(selections[0].functionLogo);
+	    $("#myModal input[name ='buttonPosition']")[0].value = checkNullValue(selections[0].buttonPosition);
+	    $("#myModal input[name ='remark']")[0].value = checkNullValue(selections[0].remark);
+	  });
 
-  $('#myModal').modal('show');
-}
+	  $('#myModal').modal('show');
+	}
 
 var fnRemoveTable = function(params) {
-  if (typeof(params) == "number") {
-    removeAjax(params)
-  } else {
-    if (!fnSelectOne()) {
-      return;
-    };
+		if (!fnSelectOne()) {
+			return;
+		}
+
+		BootstrapDialog.show({
+			title: '删除',
+			message: '是否删除该选项？',
+			buttons: [{
+				label: '取消',
+				action: function(dialog) {
+					dialog.close();
+				}
+			}, {
+				label: '确认',
+				action: function(dialog) {
+					dialog.close();
     var selections = $("#pw_table").bootstrapTable('getSelections');
 
     $.ajax({
@@ -65,7 +65,6 @@ var fnRemoveTable = function(params) {
           message: res.message
         });
 
-        //console.log("success: ", res);
         $('#myModal').modal('hide')
         $("#pw_table").bootstrapTable("refresh", {
           url: "...",
@@ -73,7 +72,6 @@ var fnRemoveTable = function(params) {
         });
       },
       error: function(e) {
-        //console.log("ERROR: ", e);
         BootstrapDialog.show({
           title: '错误信息',
           message: 'ajax请求error'
@@ -81,12 +79,14 @@ var fnRemoveTable = function(params) {
       }
     });
   }
+			}]
+		});
 
-}
+	}
 
 var fnSaveDialog = function() {
   var saveUrlTemp = "function";
-  //console.log($("input[name ='flag']")[0].value);
+
   $("#dialogForm").validate();
   if ($("#dialogForm").valid()) {
     $.ajax({
@@ -100,7 +100,6 @@ var fnSaveDialog = function() {
         if (authorityInterceptorJump(res)) {
           return;
         }
-        //console.log("success: ", res);
 
         BootstrapDialog.show({
           title: ' 提示信息',
@@ -114,7 +113,6 @@ var fnSaveDialog = function() {
         });
       },
       error: function(e) {
-        //console.log("ERROR: ", e);
         BootstrapDialog.show({
           title: '错误信息',
           message: 'ajax请求error'

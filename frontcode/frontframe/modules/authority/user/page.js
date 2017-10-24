@@ -41,6 +41,18 @@ var fnRemoveTable = function() {
     return;
   }
 
+	BootstrapDialog.show({
+		title: '删除',
+		message: '是否删除该选项？',
+		buttons: [{
+			label: '取消',
+			action: function(dialog) {
+				dialog.close();
+			}
+		}, {
+			label: '确认',
+			action: function(dialog) {
+				dialog.close();
   var selections = $("#pw_table").bootstrapTable('getSelections');
 
   $.ajax({
@@ -75,6 +87,10 @@ var fnRemoveTable = function() {
       });
     }
   });
+			}
+		}]
+	});
+
 }
 
 var fnPasswordReset = function() {
