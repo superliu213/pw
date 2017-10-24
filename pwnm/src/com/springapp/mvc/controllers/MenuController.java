@@ -88,8 +88,8 @@ public class MenuController {
 			logger.error("获取FunctionServiceImpl失败");
 		}
 
-		List<SysFunction> dbFunction = functionService.getFunctions(user);
-		
+		List<SysFunction> dbFunction = functionService.getFunctionsNoButton(user);
+
 		for (SysFunction function : dbFunction) {
 			if (function.getFunctionType() < 3) {
 				MenuDto temp = new MenuDto();

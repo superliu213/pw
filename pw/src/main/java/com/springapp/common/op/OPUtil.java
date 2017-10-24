@@ -15,11 +15,8 @@ public class OPUtil {
 	 * @return
 	 */
 	public static OPException handleException(Exception e) {
-		// 调试用，运行时关闭
-		e.printStackTrace();
-
 		if (e instanceof JDBCException) {
-			return new OPException(((JDBCException) e).getSQLException());
+			return new OPException((HibernateException) e);
 		} else if (e instanceof HibernateException) {
 			return new OPException((HibernateException) e);
 		} else {

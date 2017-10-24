@@ -137,7 +137,17 @@ public class UserController {
 		String message = "更新成功";
 		DataDto dto = new DataDto();
 
-		SysUser user = new SysUser();
+		try {
+			if (userService == null) {
+				userService = (UserServiceImpl) Application.getService(UserServiceImpl.class);
+			}
+		} catch (Exception e) {
+			logger.error("获取UserServiceImpl失败");
+		}
+
+		try {
+
+		SysUser user = userService.getUser(Long.valueOf(id));
 		user.setId(Long.valueOf(id));
 		user.setIfValid(ifValid);
 		String pattern = "yyyy-MM-dd";
@@ -148,19 +158,11 @@ public class UserController {
 		user.setUserId(userId);
 		user.setUserIdCard(userIdCard);
 		user.setUserName(userName);
-		user.setUserPassWord(userId);
+		//user.setUserPassWord(userId);
 		user.setUserTelephone(userTelephone);
 		user.setUserValidityPeriod(DateTimeUtil.parseStringToDate(userValidityPeriod, pattern));
 
-		try {
-			if (userService == null) {
-				userService = (UserServiceImpl) Application.getService(UserServiceImpl.class);
-			}
-		} catch (Exception e) {
-			logger.error("获取UserServiceImpl失败");
-		}
 
-		try {
 			userService.updateUser(user);
 		} catch (Exception e) {
 			message = "更新失败";

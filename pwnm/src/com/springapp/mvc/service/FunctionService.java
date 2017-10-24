@@ -2,6 +2,7 @@ package com.springapp.mvc.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.springapp.common.op.LikeMatchMode;
 import com.springapp.common.op.SqlRestrictions;
@@ -65,12 +66,52 @@ public class FunctionService extends BaseHibernateDao implements FunctionService
 
 	@Override
 	public void removeFunctionByKey(Long id) {
-		String hql = "delete from SysFunction t where t.id = ?";
+		String sqlQuery = "SELECT b.id "
+						+ "FROM sys_role_function a,sys_function b "
+						+ "WHERE a.function_id = b.function_id "
+						+ " AND b.id = ?"
+						+ "UNION "
+						+ "SELECT c.id "
+						+ "FROM sys_function c "
+						+ "WHERE c.function_id IN ( "
+                        + "       SELECT DISTINCT b.function_parent_id "
+                        + "       FROM sys_role_function a,sys_function b "
+                        + " 	  WHERE b.function_type = 3 "
+                        + "       AND a.function_id = b.function_id ) "
+                        + "AND c.id =? "
+                        + "UNION "
+                        + "SELECT d.id "
+                        + "FROM sys_function d "
+                        + "WHERE d.FUNCTION_ID IN ( "
+                        + "      SELECT DISTINCT c.FUNCTION_PARENT_ID "
+                        + "      FROM sys_function c "
+                        + "      WHERE c.function_id IN ( "
+                        +"             SELECT DISTINCT b.function_parent_id "
+                        +"             FROM sys_role_function a, sys_function b "
+                        +"             WHERE b.function_type = 3 "
+                        +"             AND a.function_id = b.function_id)) "
+                        +"AND d.id =? ";
+		List entityListHQL = null;
 		try {
-			this.execHqlUpdateLP(hql, id);
-		} catch (OPException e) {
-			logger.error("删除失败", e);
-			throw new ApplicationException(e);
+			entityListHQL = this.querySQL(sqlQuery, id, id, id);
+		} catch (Exception e) {
+			logger.error("查询失败", e);
+			throw new ApplicationException("查询失败", e);
+		}
+		
+		if(entityListHQL.size() > 0){
+			throw new ApplicationException("此functionId已被引用，无法删除");
+		}else{
+			String sqlrf = "delete from SYS_ROLE_FUNCTION t where t.FUNCTION_ID in (select t.FUNCTION_ID from Sys_Function t where t.id = ? )";
+			String sql = "delete from Sys_Function t where t.id = ?";
+
+			try {
+				this.execSqlUpdateLP(sqlrf, id);
+				this.execSqlUpdateLP(sql, id);
+			} catch (Exception e) {
+				logger.error("删除失败", e);
+				throw new ApplicationException("删除失败", e);
+			}
 		}
 	}
 
@@ -283,46 +324,56 @@ public class FunctionService extends BaseHibernateDao implements FunctionService
 	}
 
 	@Override
-	public List<SysFunction> getFunctions(String userId) {
+	public List<SysFunction> getFunctionsNoButton(String userId) {
 		List<SysFunction> result = new ArrayList<>();
 
-		try{
+		try {
 			if ("admin".equals(userId)) {
-				result = getAllFunctions();
+				String hql = "from SysFunction t where t.functionType < 3 order by t.functionType, t.orderNo";
+				try {
+					result = (List<SysFunction>) this.retrieveObjs(hql);
+				} catch (Exception e) {
+					logger.error("查询失败", e);
+					throw new ApplicationException(e);
+				}
 			} else {
-				String sql = " SELECT * FROM (SELECT c.* " + "FROM  sys_user_role a, sys_role_function b, sys_function c "
-						+ "WHERE a.role_id = b.role_id AND b.function_id = c.function_id AND a.user_id = ? " + "UNION "
+				String sql = " SELECT * FROM (SELECT c.* "
+						+ "FROM  sys_user_role a, sys_role_function b, sys_function c "
+						+ "WHERE a.role_id = b.role_id AND b.function_id = c.function_id AND a.user_id = ? "
+						+ "UNION "
 						+ "SELECT e.* FROM sys_function e "
 						+ "WHERE e.function_id IN (SELECT DISTINCT c.function_parent_id "
 						+ "                       FROM sys_user_role a, sys_role_function b,sys_function c "
 						+ "                       WHERE a.role_id = b.role_id AND c.function_type = 3 AND b.function_id = c.function_id "
-						+ "                       AND a.user_id = ?) " + "UNION " + "SELECT f.* FROM sys_function f "
+						+ "                       AND a.user_id = ?) "
+						+ "UNION "
+						+ "SELECT f.* FROM sys_function f "
 						+ "WHERE f.FUNCTION_ID IN (SELECT DISTINCT e.FUNCTION_PARENT_ID "
 						+ "                        FROM sys_function e "
 						+ "                        WHERE e.function_id IN (SELECT DISTINCT c.function_parent_id "
 						+ "                                               FROM sys_user_role a,sys_role_function b,sys_function c "
 						+ "                                               WHERE a.role_id = b.role_id AND c.function_type = 3 "
 						+ "                                               AND b.function_id = c.function_id AND a.user_id = ?) "
-						+ "                        ) " + "                    )";
-				List<Object[]> tempList = null;
+						+ "                        )) ss where ss.function_type < 3";
+				List<Map<String, Object>> tempList = null;
 				try {
-					tempList = (List<Object[]>) this.querySQL(sql, userId, userId, userId);
-				} catch (OPException e) {
+					tempList = this.retrieveListSQLLP(sql, userId, userId, userId);
+				} catch (Exception e) {
 					logger.error("查询失败", e);
 				}
 
-				for (Object[] obj : tempList) {
+				for (Map<String, Object> obj : tempList) {
 					SysFunction sysFunction = new SysFunction();
-					Long id = Long.valueOf(obj[0].toString());
-					String functionId = (String) obj[1];
-					String functionName = (String) obj[2];
-					Short functionType = Short.valueOf(obj[3].toString());
-					String functionParentId = obj[4] == null ? null : (String) obj[4];
-					String functionUrl = obj[5] == null ? null : (String) obj[5];
-					Integer orderNo = Integer.valueOf(obj[6].toString());
-					String functionLogo = obj[7] == null ? null : (String) obj[7];
-					String buttonPosition = obj[8] == null ? null : (String) obj[8];
-					String remark = obj[9] == null ? null : (String) obj[9];
+					Long id = Long.valueOf(obj.get("ID").toString());
+					String functionId = (String) obj.get("FUNCTION_ID");
+					String functionName = (String) obj.get("FUNCTION_NAME");
+					Short functionType = Short.valueOf(obj.get("FUNCTION_TYPE").toString());
+					String functionParentId = obj.get("FUNCTION_PARENT_ID") == null ? null : (String) obj.get("FUNCTION_PARENT_ID");
+					String functionUrl = obj.get("FUNCTION_URL") == null ? null : (String) obj.get("FUNCTION_URL");
+					Integer orderNo = Integer.valueOf(obj.get("ORDER_NO").toString());
+					String functionLogo = obj.get("FUNCTION_LOGO") == null ? null : (String) obj.get("FUNCTION_LOGO");
+					String buttonPosition = obj.get("BUTTON_POSITION") == null ? null : (String) obj.get("BUTTON_POSITION");
+					String remark =obj.get("REMARK") == null ? null : (String) obj.get("REMARK");
 					sysFunction.setButtonPosition(buttonPosition);
 					sysFunction.setFunctionId(functionId);
 					sysFunction.setFunctionLogo(functionLogo);
@@ -336,7 +387,7 @@ public class FunctionService extends BaseHibernateDao implements FunctionService
 					result.add(sysFunction);
 				}
 			}
-		}catch (Exception e){
+		} catch (NumberFormatException e) {
 			logger.error("查询失败", e);
 			throw new ApplicationException(e);
 		}

@@ -66,10 +66,14 @@ public class GroupService extends BaseHibernateDao implements GroupServiceImpl {
 
 	@Override
 	public void removeGroupByKey(Long id) {
-		String hql = "delete from SysGroup t where t.id = ?";
+		String sql = "delete from SYS_GROUP_ROLE a where a.GROUP_ID in (select b.GROUP_ID from SYS_GROUP b where b.id =?)";
+		String sqlug = "delete from SYS_USER_GROUP a where a.GROUP_ID in (select b.GROUP_ID from SYS_GROUP b where b.id =?)";
+		String sqlg = "delete from SYS_GROUP t where t.id = ?";
 		try {
-			this.execHqlUpdateLP(hql, id);
-		} catch (OPException e) {
+			this.execSqlUpdateLP(sql, id);
+			this.execSqlUpdateLP(sqlug, id);
+			this.execSqlUpdateLP(sqlg, id);
+		} catch (Exception e) {
 			logger.error("删除失败", e);
 			throw new ApplicationException(e);
 		}

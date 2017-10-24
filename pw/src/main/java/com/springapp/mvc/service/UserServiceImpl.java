@@ -26,4 +26,6 @@ public interface UserServiceImpl extends BusinessService {
 
 	String updatepassword(Long id, String oldPassword, String newPassword);
 
+	SysUser getUser(Long id);
+
 }

@@ -12,8 +12,8 @@ public interface FunctionServiceImpl extends BusinessService {
 			String functionType, String functionParentId);
 
 	List<SysFunction> getAllFunctions();
-	
-	List<SysFunction> getFunctions(String userId);
+
+	List<SysFunction> getFunctionsNoButton(String userId);
 
 	void removeFunctionByKey(Long id);
 

@@ -113,9 +113,14 @@ public class UserService extends BaseHibernateDao implements UserServiceImpl {
 
 	@Override
 	public void removeUserByKey(Long id) {
-		String hql = "delete from SysUser t where t.id = ?";
+		String sqlug = "delete from SYS_USER_GROUP s where s.USER_ID in (select t.USER_ID from SYS_USER t where t.id = ?)";
+		String sqlur = "delete from SYS_USER_ROLE s where s.USER_ID in (select t.USER_ID from SYS_USER t where t.id = ?)";
+		String sql = "delete from SYS_USER t where t.id = ?";
+		
 		try {
-			this.execHqlUpdateLP(hql, id);
+			this.execSqlUpdateLP(sqlug, id);
+			this.execSqlUpdateLP(sqlur, id);
+			this.execSqlUpdateLP(sql, id);
 		} catch (OPException e) {
 			logger.error("删除失败", e);
 			throw new ApplicationException(e);
@@ -190,5 +195,21 @@ public class UserService extends BaseHibernateDao implements UserServiceImpl {
 		}
 
 		return result;
+	}
+
+	@Override
+	public SysUser getUser(Long id) {
+		String hql = "from SysUser where id=" + id;
+		List<SysUser> result = null;
+		try {
+			result = (List<SysUser>) this.retrieveObjs(hql);
+			if (result != null && result.size() > 0) {
+				return result.get(0);
+			}
+		} catch (Exception e) {
+			logger.error("查询失败", e);
+			throw new ApplicationException(e);
+		}
+		return null;
 	}
 }

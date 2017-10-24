@@ -62,10 +62,16 @@ public class RoleService extends BaseHibernateDao implements RoleServiceImpl {
 
 	@Override
 	public void removeRoleByKey(Long id) {
-		String hql = "delete from SysRole t where t.id = ?";
+		String sqlrf = "delete from SYS_ROLE_FUNCTION s where s.ROLE_ID in (select t.ROLE_ID from SYS_ROLE t where t.id = ?)";
+		String sqlur = "delete from SYS_USER_ROLE s where s.ROLE_ID in (select t.ROLE_ID from SYS_ROLE t where t.id = ?)";
+		String sqlgr = "delete from SYS_GROUP_ROLE s where s.ROLE_ID in (select t.ROLE_ID from SYS_ROLE t where t.id = ?)";
+		String sql = "delete from SYS_ROLE t where t.id = ?";
 		try {
-			this.execHqlUpdateLP(hql, id);
-		} catch (OPException e) {
+			this.execSqlUpdateLP(sqlrf, id);
+			this.execSqlUpdateLP(sqlur, id);
+			this.execSqlUpdateLP(sqlgr, id);
+			this.execSqlUpdateLP(sql, id);
+		} catch (Exception e) {
 			logger.error("删除失败", e);
 			throw new ApplicationException(e);
 		}

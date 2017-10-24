@@ -173,6 +173,8 @@ var fnSaveTree = function() {
 
   if (selections.length > 0) {
     userId = selections[0].userId;
+  }else{
+    return;
   }
 
   var arr = $('#using_json_tree').jstree("get_checked", true);
