@@ -8,15 +8,15 @@ var fnRemoveTable = function(params) {
 		}
 
 		BootstrapDialog.show({
-			title: 'åˆ é™¤',
-			message: 'æ˜¯å¦åˆ é™¤è¯¥é€‰é¡¹ï¼Ÿ',
+			title: 'É¾³ı',
+			message: 'ÊÇ·ñÉ¾³ı¸ÃÑ¡Ïî£¿',
 			buttons: [{
-				label: 'å–æ¶ˆ',
+				label: 'È¡Ïû',
 				action: function(dialog) {
 					dialog.close();
 				}
 			}, {
-				label: 'ç¡®è®¤',
+				label: 'È·ÈÏ',
 				action: function(dialog) {
 					dialog.close();
     var selections = $("#pw_table").bootstrapTable('getSelections');
