@@ -112,7 +112,6 @@ var pageFunction = function(){
 
 // table query start
 var dataLoad = function(params) {
-	console.log(params);
 	setTimeout(function() {
 		tableData(params, $("#" + form).values(), dataLoadUrl);
 	});// 默认delay 0

@@ -3,12 +3,22 @@ var resetDataUrl = interUrl.basic + interUrl.function.init;
 var form = "functionForm";
 
 var fnRemoveTable = function(params) {
-  if (typeof(params) == "number") {
-    removeAjax(params)
-  } else {
-    if (!fnSelectOne()) {
-      return;
-    };
+		if (!fnSelectOne()) {
+			return;
+		}
+
+		BootstrapDialog.show({
+			title: '删除',
+			message: '是否删除该选项？',
+			buttons: [{
+				label: '取消',
+				action: function(dialog) {
+					dialog.close();
+				}
+			}, {
+				label: '确认',
+				action: function(dialog) {
+					dialog.close();
     var selections = $("#pw_table").bootstrapTable('getSelections');
 
     commonAjax(interUrl.basic + interUrl.function.remove,
@@ -23,12 +33,14 @@ var fnRemoveTable = function(params) {
               }
     );
   }
+			}]
+		});
 
 }
 
 var fnSaveDialog = function() {
   var saveUrlTemp = "function";
-  //console.log($("input[name ='flag']")[0].value);
+
   $("#dialogForm").validate();
   if ($("#dialogForm").valid()) {
     commonAjax(interUrl.basic + saveUrlTemp + "/" + $("input[name ='flag']")[0].value,

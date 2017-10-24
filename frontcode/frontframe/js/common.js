@@ -1,3 +1,39 @@
+var commonAjax = function(url,type,data,successFuc,async){
+	if(typeof(async) == 'undefined'){
+		async = true;
+	}
+	$.ajax({
+		url: url,
+		type: type,
+		data: data,
+		async: async,
+		headers: {
+			"AUTH_ID": sessionStorage.getItem('authId')
+		},
+		success: function(res) {
+			if (authorityInterceptorJump(res)) {
+				return;
+			}
+
+			if(typeof(successFuc) != "undefined"){
+				successFuc(res);
+			}
+
+			BootstrapDialog.show({
+				title: ' 提示信息',
+				message: res.message
+			});
+		},
+		error: function(e) {
+			BootstrapDialog.show({
+				title: '错误信息',
+				message: 'ajax请求error'
+			});
+		}
+	});
+
+}
+
 //validator addMethod start
 $.validator.addMethod("commonString",function(value,element,params){
  var commonString = /^-?\w{1,20}$/;
@@ -253,6 +289,51 @@ var loadTree = function(params, url) {
 }
 
 // common button function start
+var fnUpdateTable = function() {
+	if (!fnSelectOne()) {
+		return;
+	}
+
+	var selections = $("#pw_table").bootstrapTable('getSelections');
+
+	var mapTemp = new Map();
+
+	selections.forEach(function(temp){
+		for(i in temp){
+			mapTemp.set(i,temp[i]);
+		}
+	});
+
+	$('#myModal')
+		.on(
+		'show.bs.modal',
+		function() {
+			$("#dialogForm")[0].reset();
+			$("#myModal :input").each(function(){
+				var temp = $(this)[0];
+				if(temp.type == 'hidden'){
+					if(temp.name == 'flag'){
+						temp.value = "update";
+					}else{
+						temp.value = mapTemp.get(temp.name);
+					}
+				}else if(temp.type == 'text'){
+					if(temp.placeholder == 'YYYY-MM-DD'){
+						temp.value = laydate.now(mapTemp.get(temp.name));
+					}else{
+						temp.value = checkNullValue(mapTemp.get(temp.name));
+					}
+				}else if(temp.type == 'select-one'){
+					temp.value = mapTemp.get(temp.name);
+				}else{
+					//console.log(temp)
+				}
+			});
+		});
+
+	$('#myModal').modal('show');
+}
+
 var fnSelectOne = function() {
 	var selections = $("#pw_table").bootstrapTable('getSelections');
 	if (selections.length == 0) {

@@ -3,26 +3,9 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>角色管理</title>
 
-  <link href="../../../favicon.ico" rel="shortcut icon">
-
-  <link href="../../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-  <link href="../../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
-  <link href="../../../css/animate.css" rel="stylesheet">
-  <link href="../../../css/style.css?v=4.1.0" rel="stylesheet">
-
-  <!-- Bootstrap Tables plugin css -->
-  <link href="../../../css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
-
-  <!-- bootstrap-dialog plugin css -->
-  <link href="../../../css/bootstrap-dialog.css" rel="stylesheet">
-
-  <!-- jsTree plugin css -->
-  <link href="../../../css/plugins/jsTree/style.min.css" rel="stylesheet">
+  <link rel="import" href="../../common/head.html">
 
 </head>
 
@@ -105,7 +88,7 @@
     </div>
   </div>
 
-  <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal inmodal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" >
     <div class="modal-dialog">
       <div class="modal-content animated bounceInRight">
         <div class="modal-header">
@@ -147,39 +130,13 @@
     </div>
   </div>
 
-  <!-- 全局js -->
-  <script src="../../../js/jquery.min.js?v=2.1.4"></script>
-  <script src="../../../js/bootstrap.min.js?v=3.3.6"></script>
+  <link rel="import" href="../../common/rootBase.html">
+	<link rel="import" href="../../common/rootPlugin.html">
+	<script src="../../../js/plugins/layer/laydate/laydate.js"></script>
+	<link rel="import" href="../../common/rootUseDefine.html">
+	<script src="mock/mockData.js"></script>
+	<script src="page.js"></script>
 
-  <!-- Bootstrap table plugin javascript -->
-  <script src="../../../js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-  <script src="../../../js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
-  <script src="../../../js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-
-  <!-- layerDate plugin javascript -->
-  <script src="../../../js/plugins/layer/laydate/laydate.js"></script>
-
-  <!-- jQuery Validation plugin javascript-->
-  <script src="../../../js/plugins/validate/jquery.validate.min.js"></script>
-  <script src="../../../js/plugins/validate/additional-methods.js"></script>
-  <script src="../../../js/plugins/validate/messages_zh.min.js"></script>
-
-  <!-- bootstrap-dialog plugin javascript-->
-  <script src="../../../js/bootstrap-dialog.js"></script>
-
-  <!-- jsTree plugin javascript -->
-  <script src="../../../js/plugins/jsTree/jstree.min.js"></script>
-
-  <!-- jquery.mockjax plugin javascript -->
-  <script src="../../../js/jquery.mockjax.js"></script>
-
-  <!-- 自定义js -->
-  <script src="../../../js/URL.js?v=1.0.0"></script>
-  <script src="../../../js/content.js?v=1.0.0"></script>
-  <script src="mock/mockData.js"></script>
-  <script src="../../../js/jquery.values.js"></script>
-  <script src="../../../js/common.js"></script>
-  <script src="page.js"></script>
 </body>
 
 </html>

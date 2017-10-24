@@ -3,12 +3,22 @@ var resetDataUrl = interUrl.basic + interUrl.role.init;
 var form = "roleForm";
 
 var fnRemoveTable = function(params) {
-  if (typeof(params) == "number") {
-    removeAjax(params)
-  } else {
-    if (!fnSelectOne()) {
-      return;
-    }
+	if (!fnSelectOne()) {
+		return;
+	}
+
+	BootstrapDialog.show({
+		title: '删除',
+		message: '是否删除该选项？',
+		buttons: [{
+			label: '取消',
+			action: function(dialog) {
+				dialog.close();
+			}
+		}, {
+			label: '确认',
+			action: function(dialog) {
+				dialog.close();
     var selections = $("#pw_table").bootstrapTable('getSelections');
 
     commonAjax(interUrl.basic + interUrl.role.remove,
@@ -25,6 +35,8 @@ var fnRemoveTable = function(params) {
         }
     )
   }
+		}]
+	});
 }
 
 var fnConfigureFunction = function(params) {
@@ -32,6 +44,10 @@ var fnConfigureFunction = function(params) {
     return;
   }
   var selections = $("#pw_table").bootstrapTable('getSelections');
+
+  $("#save_tree").unbind("click");
+  $("#save_tree").on("click", fnSaveTree);
+
   loadTree({
     "roleId": selections[0].roleId
   }, interUrl.basic + interUrl.role.function);
@@ -61,6 +77,8 @@ var fnSaveTree = function() {
 
   if (selections.length > 0) {
     roleId = selections[0].roleId;
+  }else{
+	  return;
   }
 
   var arr = $('#using_json_tree').jstree("get_checked", true);
@@ -91,7 +109,6 @@ $(document).ready(function() {
   $("#configure_function").on("click", fnConfigureFunction);
   $("#query_table").on("click", fnQueryTable);
   $("#save_dialog").on("click", fnSaveDialog);
-  $("#save_tree").on("click", fnSaveTree);
   $("#open_tree").on("click", fnOpenTree);
   $("#close_tree").on("click", fnCloseTree);
   $("#reset_data").on("click", fnResetData);

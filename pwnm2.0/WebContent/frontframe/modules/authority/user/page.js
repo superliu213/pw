@@ -9,20 +9,36 @@ var fnRemoveTable = function() {
     return;
   }
 
-  var selections = $("#pw_table").bootstrapTable('getSelections');
+	BootstrapDialog.show({
+		title: '删除',
+		message: '是否删除该选项？',
+		buttons: [{
+			label: '取消',
+			action: function(dialog) {
+				dialog.close();
+			}
+		}, {
+			label: '确认',
+			action: function(dialog) {
+				dialog.close();
+        var selections = $("#pw_table").bootstrapTable('getSelections');
 
-  commonAjax(interUrl.basic + interUrl.user.remove,
-    "POST", {
-      "id": selections[0].id
-    },
-    function(res) {
-      $('#myModal').modal('hide')
-      $("#pw_table").bootstrapTable("refresh", {
-        url: "...",
-        query: res
-      });
-    }
-  )
+        commonAjax(interUrl.basic + interUrl.user.remove,
+          "POST", {
+            "id": selections[0].id
+          },
+          function(res) {
+            $('#myModal').modal('hide');
+            $("#pw_table").bootstrapTable("refresh", {
+              url: "...",
+              query: res
+            });
+          }
+        );
+			}
+		}]
+	});
+
 }
 
 var fnPasswordReset = function() {

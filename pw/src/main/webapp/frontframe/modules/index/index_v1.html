@@ -3,193 +3,200 @@
 
 <head>
 
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 	<title>主页</title>
 
-	<link href="../../favicon.ico" rel="shortcut icon">
-	<link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-	<link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
-
-	<link href="../../css/animate.css" rel="stylesheet">
-	<link href="../../css/style.css?v=4.1.0" rel="stylesheet">
+	<link rel="import" href="../common/head.html">
 
 </head>
 
 <body class="gray-bg">
-<div class="wrapper wrapper-content">
-	<div class="row">
-		<div class="col-sm-4">
+	<div class="wrapper wrapper-content">
+		<div class="row">
+			<div class="col-sm-4">
 
-			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<h5>问题、任务列表</h5>
-				</div>
-				<div class="ibox-content">
-					<h4 class="text-danger">[defect]:</h4>
-					<ol>
-						<li>smartbi报表传参使用中文返回是乱码</li>
-					</ol>
-					<h4 class="text-warning">[task]:</h4>
-					<ol>
-						<li>权限管理删除用户、角色、机构、菜单，未添加关联删除</li>
-						<li>session控制有待完善</li>
-					</ol>
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>问题、任务列表</h5>
+					</div>
+					<div class="ibox-content">
+						<!-- <h4 class="text-danger">[defect]:</h4> -->
+						<h4 class="text-warning">[task]:</h4>
+						<ol>
+							<li>session控制有待完善</li>
+						</ol>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="col-sm-8">
-			<div class="ibox float-e-margins">
-				<div class="ibox-title">
-					<h5>更新日志</h5>
-				</div>
-				<div class="ibox-content no-padding">
-					<div class="panel-body">
-						<div class="panel-group" id="version">
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h5 class="panel-title">
-										<a data-toggle="collapse" data-parent="#version" href="#0731">v1.0.7</a>
-										<code class="pull-right">2017.07.31</code>
-									</h5>
-								</div>
-								<div id="0731" class="panel-collapse collapse in">
-									<div class="panel-body">
-										<div class="alert alert-warning">此版本是一个维护版本，主要是升级和修复bug</div>
-										<ol>
-											<li>添加了密码重置和密码修改，并进行md5加密</li>
-										</ol>
+			<div class="col-sm-8">
+				<div class="ibox float-e-margins">
+					<div class="ibox-title">
+						<h5>更新日志</h5>
+					</div>
+					<div class="ibox-content no-padding">
+						<div class="panel-body">
+							<div class="panel-group" id="version">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h5 class="panel-title">
+											<a data-toggle="collapse" data-parent="#version" href="#1024">v1.0.8</a>
+											<code class="pull-right">2017.10.24</code>
+										</h5>
+									</div>
+									<div id="1024" class="panel-collapse collapse in">
+										<div class="panel-body">
+											<div class="alert alert-warning">此版本是一个维护版本，主要是升级和修复bug</div>
+											<ol>
+												<li>通过import，模块化html</li>
+												<li>优化了弹出框点击空白关闭</li>
+												<li>优化了删除按钮</li>
+												<li>修复了配置导致多次绑定监听</li>
+											</ol>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h5 class="panel-title">
-										<a data-toggle="collapse" data-parent="#version" href="#0716">v1.0.6</a>
-										<code class="pull-right">2017.07.16</code>
-									</h5>
-								</div>
-								<div id="0716" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ol>
-											<li>添加代码样例模块</li>
-											<li>优化了报表demo页面</li>
-											<li>优化了前端代码</li>
-											<li>完善文档</li>
-										</ol>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h5 class="panel-title">
+											<a data-toggle="collapse" data-parent="#version" href="#0731">v1.0.7</a>
+											<code class="pull-right">2017.07.31</code>
+										</h5>
+									</div>
+									<div id="0731" class="panel-collapse collapse ">
+										<div class="panel-body">
+											<ol>
+												<li>添加了密码重置和密码修改，并进行md5加密</li>
+											</ol>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h5 class="panel-title">
-										<a data-toggle="collapse" data-parent="#version" href="#0712">v1.0.5</a>
-										<code class="pull-right">2017.07.12</code>
-									</h5>
-								</div>
-								<div id="0712" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ol>
-											<li>实现了一个后台maven版本，并解决发布和部署问题，以及与开发工具eclipse配置的统一</li>
-											<li>整理jar包，提供一个非maven版本</li>
-											<li>嵌入h2数据库，提供一个不依赖远程数据库且脱离表设计的非maven版本</li>
-											<li>添加性能监控模块</li>
-											<li>添加数据库监控模块</li>
-											<li>添加了用户登录权限检验控制</li>
-										</ol>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h5 class="panel-title">
+											<a data-toggle="collapse" data-parent="#version" href="#0716">v1.0.6</a>
+											<code class="pull-right">2017.07.16</code>
+										</h5>
+									</div>
+									<div id="0716" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ol>
+												<li>添加代码样例模块</li>
+												<li>优化了报表demo页面</li>
+												<li>优化了前端代码</li>
+												<li>完善文档</li>
+											</ol>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h5 class="panel-title">
-										<a data-toggle="collapse" data-parent="#version" href="#0630">v1.0.4</a>
-										<code class="pull-right">2017.06.30</code>
-									</h5>
-								</div>
-								<div id="0630" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ol>
-											<li>整理BaseHibernateDao，验证其接口</li>
-											<li>添加事务配置</li>
-											<li>实现后台Service逻辑，完成数据库交互代码</li>
-											<li>调研linux下部署smartbi报表方案</li>
-											<li>添加了菜单权限按钮控制</li>
-										</ol>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h5 class="panel-title">
+											<a data-toggle="collapse" data-parent="#version" href="#0712">v1.0.5</a>
+											<code class="pull-right">2017.07.12</code>
+										</h5>
+									</div>
+									<div id="0712" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ol>
+												<li>实现了一个后台maven版本，并解决发布和部署问题，以及与开发工具eclipse配置的统一</li>
+												<li>整理jar包，提供一个非maven版本</li>
+												<li>嵌入h2数据库，提供一个不依赖远程数据库且脱离表设计的非maven版本</li>
+												<li>添加性能监控模块</li>
+												<li>添加数据库监控模块</li>
+												<li>添加了用户登录权限检验控制</li>
+											</ol>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h5 class="panel-title">
-										<a data-toggle="collapse" data-parent="#version" href="#0616">v1.0.3</a>
-										<code class="pull-right">2017.06.16</code>
-									</h5>
-								</div>
-								<div id="0616" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ol>
-											<li>添加日志管理模块</li>
-											<li>明确用户、角色、机构、菜单两两关系，并实现关联树的功能</li>
-											<li>添加spring-config和spring mvc的配置</li>
-											<li>添加hibernate的配置</li>
-											<li>添加proxool数据连接池配置</li>
-											<li>添加log4j配置</li>
-										</ol>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h5 class="panel-title">
+											<a data-toggle="collapse" data-parent="#version" href="#0630">v1.0.4</a>
+											<code class="pull-right">2017.06.30</code>
+										</h5>
+									</div>
+									<div id="0630" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ol>
+												<li>整理BaseHibernateDao，验证其接口</li>
+												<li>添加事务配置</li>
+												<li>实现后台Service逻辑，完成数据库交互代码</li>
+												<li>调研linux下部署smartbi报表方案</li>
+												<li>添加了菜单权限按钮控制</li>
+											</ol>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h5 class="panel-title">
-										<a data-toggle="collapse" data-parent="#version" href="#0612">v1.0.2</a>
-										<code class="pull-right">2017.06.12</code>
-									</h5>
-								</div>
-								<div id="0612" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ol>
-											<li>添加用户管理模块</li>
-											<li>添加角色管理模块</li>
-											<li>添加机构管理模块</li>
-											<li>添加权限管理模块</li>
-											<li>整理前端代码，提取公共代码到common.js，分离js核心业务到page.js</li>
-										</ol>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h5 class="panel-title">
+											<a data-toggle="collapse" data-parent="#version" href="#0616">v1.0.3</a>
+											<code class="pull-right">2017.06.16</code>
+										</h5>
+									</div>
+									<div id="0616" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ol>
+												<li>添加日志管理模块</li>
+												<li>明确用户、角色、机构、菜单两两关系，并实现关联树的功能</li>
+												<li>添加spring-config和spring mvc的配置</li>
+												<li>添加hibernate的配置</li>
+												<li>添加proxool数据连接池配置</li>
+												<li>添加log4j配置</li>
+											</ol>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h5 class="panel-title">
-										<a data-toggle="collapse" data-parent="#version" href="#0607">v1.0.1</a>
-										<code class="pull-right">2017.06.07</code>
-									</h5>
-								</div>
-								<div id="0607" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ol>
-											<li>嵌入smartbi报表，解决参数传递问题</li>
-											<li>调整登录界面</li>
-											<li>优化主页面</li>
-											<li>jquery mock设计和实践</li>
-											<li>左侧菜单栏的加载</li>
-										</ol>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h5 class="panel-title">
+											<a data-toggle="collapse" data-parent="#version" href="#0612">v1.0.2</a>
+											<code class="pull-right">2017.06.12</code>
+										</h5>
+									</div>
+									<div id="0612" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ol>
+												<li>添加用户管理模块</li>
+												<li>添加角色管理模块</li>
+												<li>添加机构管理模块</li>
+												<li>添加权限管理模块</li>
+												<li>整理前端代码，提取公共代码到common.js，分离js核心业务到page.js</li>
+											</ol>
+										</div>
 									</div>
 								</div>
-							</div>
-							<div class="panel panel-default">
-								<div class="panel-heading">
-									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#version" href="#0601">v1.0.0</a>
-										<code class="pull-right">2017.06.01</code>
-									</h4>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h5 class="panel-title">
+											<a data-toggle="collapse" data-parent="#version" href="#0607">v1.0.1</a>
+											<code class="pull-right">2017.06.07</code>
+										</h5>
+									</div>
+									<div id="0607" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ol>
+												<li>嵌入smartbi报表，解决参数传递问题</li>
+												<li>调整登录界面</li>
+												<li>优化主页面</li>
+												<li>jquery mock设计和实践</li>
+												<li>左侧菜单栏的加载</li>
+											</ol>
+										</div>
+									</div>
 								</div>
-								<div id="0601" class="panel-collapse collapse">
-									<div class="panel-body">
-										<ol>
-											<li>初次发布。</li>
-										</ol>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											<a data-toggle="collapse" data-parent="#version" href="#0601">v1.0.0</a>
+											<code class="pull-right">2017.06.01</code>
+										</h4>
+									</div>
+									<div id="0601" class="panel-collapse collapse">
+										<div class="panel-body">
+											<ol>
+												<li>初次发布。</li>
+											</ol>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -199,12 +206,8 @@
 			</div>
 		</div>
 	</div>
-</div>
 
-<!-- 全局js -->
-<script src="../../js/jquery.min.js?v=2.1.4"></script>
-<script src="../../js/bootstrap.min.js?v=3.3.6"></script>
-<script src="../../js/plugins/layer/layer.min.js"></script>
+	<link rel="import" href="../common/rootBase.html">
 
 </body>
 
